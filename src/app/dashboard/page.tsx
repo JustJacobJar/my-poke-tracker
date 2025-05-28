@@ -33,7 +33,7 @@ export default async function Dashboard() {
   );
 }
 
-export function PokeTeamEmpty() {
+function PokeTeamEmpty() {
   return (
     <div className="grid w-fit grid-cols-3 gap-4">
       <PokeCardEmpty />
