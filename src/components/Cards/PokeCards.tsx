@@ -1,7 +1,5 @@
 "use server";
-
-import { cn } from "@/lib/utils";
-import { textSkeleton } from "../Skeleton";
+import Image from "next/image";
 
 export async function PokeCard({ name }: { name: string }) {
   //fetch data from api here
@@ -9,7 +7,11 @@ export async function PokeCard({ name }: { name: string }) {
 
   return (
     <div className="flex aspect-[3/4] w-64 flex-col place-content-around place-items-center gap-2 rounded-xl bg-neutral-500 p-4">
-      <img className="aspect-square h-fit w-full bg-red-400" />
+      <Image
+        src={""}
+        alt="Pokemon"
+        className="aspect-square h-fit w-full bg-red-400"
+      />
       <div className="flex w-full place-content-evenly">
         <label>Type 1</label>
         <label>Type 2</label>

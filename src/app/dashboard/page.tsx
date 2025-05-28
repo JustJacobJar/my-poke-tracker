@@ -2,7 +2,6 @@
 import { PokeCard } from "@/components/Cards/PokeCards";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import { PokemonTeam } from "../../../generated/prisma";
 import { Suspense } from "react";
 import {
   PokeCardEmpty,
@@ -34,7 +33,7 @@ export default async function Dashboard() {
   );
 }
 
-function PokeTeamEmpty() {
+export function PokeTeamEmpty() {
   return (
     <div className="grid w-fit grid-cols-3 gap-4">
       <PokeCardEmpty />
@@ -65,7 +64,7 @@ function PokeTeam({ pokeTeam }: { pokeTeam: IPokeTeam }) {
   */
 
   const pokemon = (team: IPokeTeam) => {
-    let elements = [];
+    const elements = [];
     for (let index = 0; index < 6; index++) {
       if (team.Pokemon[index] != null) {
         elements.push(
