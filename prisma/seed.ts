@@ -1,13 +1,16 @@
-import { PrismaClient, Prisma } from "../generated/prisma";
+import { PrismaClient } from "../generated/prisma";
 
 const prisma = new PrismaClient();
 
 const pokeData = [
   {
-    Pokemon: ["pikachu", "phantom", "ditto"],
+    pokemon: ["pikachu", "phantom", "ditto"],
+    description: "This team consists of three pokemon. They are quite simple.",
   },
   {
-    Pokemon: ["raichu", "bulbasaur", "charizard"],
+    pokemon: ["raichu", "bulbasaur", "charizard"],
+    description:
+      "This team is almost like the starters but evolved, only kind of.",
   },
 ];
 

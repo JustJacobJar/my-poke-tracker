@@ -1,9 +1,6 @@
-"use server";
-import Image from "next/image";
-
-export async function PokeCard({ name }: { name: string }) {
-  //fetch data from api here
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+"use client";
+export function PokeCard({ name }: { name: string }) {
+  //Provide it with the image, types, name
 
   return (
     <div className="flex aspect-[3/4] w-64 flex-col place-content-around place-items-center gap-2 rounded-xl bg-neutral-500 p-4">

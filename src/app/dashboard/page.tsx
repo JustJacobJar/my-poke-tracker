@@ -3,12 +3,14 @@ import prisma from "@/lib/prisma";
 import Link from "next/link";
 
 import PokeTeam from "@/components/Cards/PokeTeam";
+import { SignOut } from "@/components/SignOut";
 
 export default async function Dashboard() {
-  const teams = await prisma.pokemonTeam.findMany();
+  const teams = await prisma.pokemonTeam.findMany(); //pagenate this
 
   return (
     <>
+      <SignOut />
       <nav className="bg-card flex h-16 w-full flex-row place-content-evenly place-items-center">
         <Link className="bg-primary rounded-md px-4 py-2" href={"/dashboard"}>
           Home

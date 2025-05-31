@@ -1,4 +1,5 @@
 export interface IPokeTeam {
   id: string;
-  Pokemon: string[];
+  pokemon: string[];
+  description: string | null;
 }
