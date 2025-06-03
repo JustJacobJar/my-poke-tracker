@@ -18,8 +18,9 @@ model PokemonTeam {
   id String @id @default(uuid())
   pokemon String[]
   description String?
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authorId String 
 }
-
 
 //AUTH
 
@@ -34,6 +35,9 @@ model User {
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  
+  //Custom
+  teams PokemonTeam[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
