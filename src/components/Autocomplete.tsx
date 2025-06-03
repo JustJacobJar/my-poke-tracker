@@ -44,18 +44,24 @@ export default function Autocomplete({
   };
 
   const handleBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!pokeList.includes(event.target.value)) {
+    if (!pokeList.includes(event.currentTarget.value)) {
       setSearchTerm("");
       return;
     }
-    setSearchTerm(event.target.value);
-    setSelected(true); //set to true
+    setSearchTerm(event.currentTarget.value);
+    setSelected(true);
   };
 
   //Currently Selected option
   const handleSelect = (poke: string) => {
+    console.log("Mouse gaming");
+
     setSearchTerm(poke);
     handleSearchSubmit(poke);
+  };
+
+  const handleMouseOver = (index: number) => {
+    setActiveIndex(index);
   };
 
   //Calls a function higher up passing in the search
@@ -104,6 +110,7 @@ export default function Autocomplete({
           results={pokemon}
           searchTerm={searchTerm}
           handleSelect={handleSelect}
+          handleMouseOver={handleMouseOver}
           activeIndex={activeIndex}
         />
       </div>
@@ -131,6 +138,7 @@ export interface ResultListProps {
   results: string[];
   searchTerm: string;
   handleSelect: (pokeName: string) => void;
+  handleMouseOver: (index: number) => void;
   activeIndex: number;
 }
 
@@ -139,9 +147,10 @@ function ResultList({
   results,
   searchTerm,
   handleSelect,
+  handleMouseOver,
   activeIndex,
 }: ResultListProps) {
-  const myRef = useRef(null);
+  const myRef = useRef<null | HTMLLIElement>(null);
   //The list of filtered terms
   const matchedTerm = (name: string, searchTerm: string) => {
     const index = name.toLowerCase().indexOf(searchTerm.toLowerCase());
@@ -162,7 +171,9 @@ function ResultList({
 
   //Scrolls active index into view upon index change
   useEffect(() => {
-    myRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (myRef.current) {
+      myRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
   }, [activeIndex]);
 
   if (results.length === 0) {
@@ -176,7 +187,8 @@ function ResultList({
           <li
             ref={activeIndex === index ? myRef : null}
             key={index}
-            onClick={() => handleSelect(result)}
+            onMouseDown={() => handleSelect(result)}
+            onMouseOver={() => handleMouseOver(index)}
             className={cn(
               "flex h-fit w-full flex-row place-content-start gap-2 text-center hover:bg-white/20",
               activeIndex === index

@@ -1,11 +1,38 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import { z } from "zod/v4";
+import { IPokeTeam } from "@/lib/types";
+import { auth } from "@/lib/auth";
+import { prisma } from "@/app/prisma";
 
 export async function POST(request: Request) {
-  //get request
-  const data = request.body;
-  //do things, eg validate, submit to db...
-  // const id = await createItem(data);
+  //Auth the user
+  const session = await auth();
+  if (!session?.user?.id) return Response.json("Error getting user data");
 
-  //returns response with status + json
-  return Response.json(data);
+  //Capture and validate data
+  const data = (await request.json()) as IPokeTeam;
+  const validated = await IPokeTeamZ.safeParseAsync(data);
+  if (!validated.success) {
+    return Response.json(validated.error.message);
+  }
+
+  try {
+    await prisma.pokemonTeam.create({
+      data: {
+        pokemon: validated.data.pokemon,
+        authorId: session.user.id,
+        description: validated.data.description,
+        name: validated.data.name,
+      },
+    });
+  } catch (error) {
+    return Response.json("There was an error saving to the database: " + error);
+  }
+
+  return Response.json("Success");
 }
+
+const IPokeTeamZ = z.object({
+  name: z.string(),
+  pokemon: z.array(z.string().catch("")),
+  description: z.string(),
+});

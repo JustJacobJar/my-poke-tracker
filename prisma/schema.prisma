@@ -15,9 +15,10 @@ datasource db {
 }
 
 model PokemonTeam {
-  id String @id @default(uuid())
+  id String @id @default(cuid())
+  name String @default("No Name")
   pokemon String[]
-  description String?
+  description String @default("No description...")
   author User @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authorId String 
 }

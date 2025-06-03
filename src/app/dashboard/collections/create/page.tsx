@@ -1,6 +1,7 @@
 "use client";
 
 import PokeCardInput from "@/components/Cards/PokeCardInput";
+import { IPokeTeam } from "@/lib/types";
 import { FormEvent } from "react";
 
 export default function CreateTeam() {
@@ -13,18 +14,23 @@ export default function CreateTeam() {
     const formData = new FormData(event.currentTarget);
 
     const rawFormData = {
-      slot1: formData.get("slot0"),
-      slot2: formData.get("slot1"),
-      slot3: formData.get("slot2"),
-      slot4: formData.get("slot3"),
-      slot5: formData.get("slot4"),
-      slot6: formData.get("slot5"),
+      name: "DefaultName",
+      // name: formData.get("name"),
+      pokemon: [
+        formData.get("slot0"),
+        formData.get("slot1"),
+        formData.get("slot2"),
+        formData.get("slot3"),
+        formData.get("slot4"),
+        formData.get("slot5"),
+      ],
+      description: "Some description",
+      // description: formData.get("description"),
     };
 
-    console.log("gaming", rawFormData);
     const response = await fetch("/api/submit", {
       method: "POST",
-      body: formData,
+      body: JSON.stringify(rawFormData as IPokeTeam),
     });
 
     //Handle response and that
