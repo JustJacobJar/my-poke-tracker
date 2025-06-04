@@ -37,7 +37,16 @@ export default async function Dashboard() {
 
       <div className="flex flex-col place-items-center gap-4 p-4">
         {teams.map((data, index) => {
-          return <PokeTeam pokeTeam={data} key={index} />;
+          return (
+            <a
+              className="bg-card rounded-2xl border-2 p-2"
+              href={`/team/${data.id}`}
+              key={index}
+            >
+              <h1 className="px-2 pb-2 text-lg">{data.name}</h1>
+              <PokeTeam pokeTeam={data} />
+            </a>
+          );
         })}
       </div>
     </>

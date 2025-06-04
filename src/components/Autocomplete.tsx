@@ -1,4 +1,5 @@
 // import { cn } from "@/lib/utils";
+"use client";
 import { clsx, type ClassValue } from "clsx";
 import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -19,22 +20,26 @@ export default function Autocomplete({
   submitSearch,
   clearOnChange,
   slotName,
+  editValue,
 }: {
   // pokeList: string[];
   classname?: string;
   submitSearch?: (value: string) => void;
   clearOnChange?: any;
   slotName: string;
+  editValue?: string;
 }) {
   const pokeList: string[] = pokeFile;
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(editValue ? editValue : "");
   const [activeIndex, setActiveIndex] = useState(-1);
   const { pokemon } = UsePokemon(pokeList as string[], searchTerm); //Filtered list of pokemon
-  const [selected, setSelected] = useState(false);
+  const [selected, setSelected] = useState(editValue ? true : false);
 
   //Reset search when page sends new data
   useEffect(() => {
-    setSearchTerm("");
+    if (clearOnChange != undefined) {
+      setSearchTerm("");
+    }
   }, [clearOnChange]);
 
   //Handles search input filtering
@@ -74,9 +79,7 @@ export default function Autocomplete({
 
   //Reset index upon list change or search term change
   useEffect(() => {
-    {
-      setActiveIndex(0);
-    }
+    setActiveIndex(0);
   }, [pokemon, searchTerm]);
 
   //Setup keys to navigate and select from the list

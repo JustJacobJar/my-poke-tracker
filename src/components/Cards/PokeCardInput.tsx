@@ -2,9 +2,15 @@
 import { useState } from "react";
 import Autocomplete from "../Autocomplete";
 
-export default function PokeCardInput({ inputId }: { inputId: string }) {
+export default function PokeCardInput({
+  inputId,
+  editValue,
+}: {
+  inputId: string;
+  editValue?: string;
+}) {
   // const [poke, setPoke] = useState("");
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(editValue ? true : false);
 
   const toggleEdit = (toggle: boolean) => {
     setEdit(toggle);
@@ -59,7 +65,11 @@ export default function PokeCardInput({ inputId }: { inputId: string }) {
             <path d="M12 8v8"></path>
           </svg>
         </button>
-        <Autocomplete classname="z-10" slotName={inputId} />
+        <Autocomplete
+          classname="z-10"
+          slotName={inputId}
+          editValue={editValue}
+        />
       </div>
     );
   };
