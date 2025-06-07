@@ -1,8 +1,8 @@
-import { PokeCard } from "./PokeCards";
-import { PokeCardEmpty } from "./PokeCardsSkeleton";
+import { PokeCard } from "../Cards/PokeCards";
+import { PokeCardEmpty } from "../Cards/PokeCardsSkeleton";
 import { IPokeTeam } from "@/lib/types";
 
-export default function PokeTeam({ pokeTeam }: { pokeTeam: IPokeTeam }) {
+export default function PokeTeamMinimal({ pokeTeam }: { pokeTeam: IPokeTeam }) {
   const pokemon = (team: IPokeTeam) => {
     const elements = [];
     for (let index = 0; index < 6; index++) {

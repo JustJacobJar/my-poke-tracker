@@ -1,11 +1,7 @@
 "use server";
 import prisma from "@/lib/prisma";
-import Link from "next/link";
-
-import PokeTeam from "@/components/Cards/PokeTeam";
-import { SignOut } from "@/components/SignOut";
 import { auth } from "@/lib/auth";
-import SignIn from "@/components/SignIn";
+import PokeTeamMinimal from "@/components/Teams/PokeTeamMinimal";
 
 export default async function Dashboard() {
   const session = await auth();
@@ -20,19 +16,6 @@ export default async function Dashboard() {
 
   return (
     <>
-      <nav className="bg-card flex h-16 w-full flex-row place-content-evenly place-items-center">
-        <Link className="bg-primary rounded-md px-4 py-2" href={"/dashboard"}>
-          Home
-        </Link>
-        <Link
-          className="bg-primary rounded-md px-4 py-2"
-          href={"/dashboard/collections"}
-        >
-          Collections
-        </Link>
-        <SignIn />
-        <SignOut />
-      </nav>
       <div>{signedIn()}</div>
 
       <div className="flex flex-col place-items-center gap-4 p-4">
@@ -44,7 +27,7 @@ export default async function Dashboard() {
               key={index}
             >
               <h1 className="px-2 pb-2 text-lg">{data.name}</h1>
-              <PokeTeam pokeTeam={data} />
+              <PokeTeamMinimal pokeTeam={data} />
             </a>
           );
         })}

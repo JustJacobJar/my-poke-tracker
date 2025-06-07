@@ -1,8 +1,8 @@
 "use server";
 
 import { prisma } from "@/app/prisma";
-import PokeTeam from "@/components/Cards/PokeTeam";
 import SignIn from "@/components/SignIn";
+import PokeTeamStandard from "@/components/Teams/PokeTeamStandard";
 import { auth } from "@/lib/auth";
 
 export default async function CollectionPage() {
@@ -33,9 +33,9 @@ export default async function CollectionPage() {
     <>
       <div>{loggedIn()}</div>
       <h1>My Teams</h1>
-      <div>
+      <div className="flex flex-col place-items-center gap-4">
         {myCollections.map((data, index) => {
-          return <PokeTeam pokeTeam={data} key={index} />;
+          return <PokeTeamStandard pokeTeam={data} key={index} />;
         })}
       </div>
     </>

@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../lib/theme-provider";
+import Link from "next/link";
+import SignIn from "@/components/SignIn";
+import { SignOut } from "@/components/SignOut";
+import { JSX } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,12 +33,69 @@ export default function RootLayout({
         attribute="class"
         defaultTheme="light"
         enableSystem
-        disableTransitionOnChange>
+        disableTransitionOnChange
+      >
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <NavBar />
           {children}
         </body>
       </ThemeProvider>
     </html>
+  );
+}
+
+function NavBar() {
+  return (
+    <nav className="bg-card flex h-16 w-full flex-row place-content-evenly place-items-center place-self-center xl:w-3/5">
+      <NavLink link="/dashboard" content={<p>Dashboard</p>} />
+      <NavLink link="/dashboard/collections" content={<p>Collections</p>} />
+      <NavLink
+        link="/dashboard/collections/create"
+        content={
+          <svg
+            className="stroke-foreground"
+            xmlns="http://www.w3.org/2000/svg"
+            width="36"
+            height="36"
+            viewBox="0 0 24 24"
+            fill="none"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect
+              strokeDasharray={3}
+              width="18"
+              height="18"
+              x="3"
+              y="3"
+              rx="4"
+            ></rect>
+            <path d="M8 12h8"></path>
+            <path d="M12 8v8"></path>
+          </svg>
+        }
+      />
+      <SignIn />
+      <SignOut />
+    </nav>
+  );
+}
+
+function NavLink({
+  content,
+  link,
+  classname,
+}: {
+  content: JSX.Element;
+  link: string;
+  classname?: string;
+}) {
+  return (
+    <Link className={classname} href={link}>
+      {content}
+    </Link>
   );
 }

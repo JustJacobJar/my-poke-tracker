@@ -3,5 +3,5 @@ export interface IPokeTeam {
   name: string;
   pokemon: string[];
   description: string | null;
-  user?: string;
+  authorId?: string;
 }
