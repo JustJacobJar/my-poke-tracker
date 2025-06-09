@@ -6,6 +6,8 @@ import Link from "next/link";
 import SignIn from "@/components/SignIn";
 import { SignOut } from "@/components/SignOut";
 import { JSX } from "react";
+import ProfileNav from "@/components/ProfileNav";
+import { SessionProvider } from "next-auth/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,8 +40,10 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <NavBar />
-          {children}
+          <SessionProvider>
+            <NavBar />
+            {children}
+          </SessionProvider>
         </body>
       </ThemeProvider>
     </html>
@@ -80,6 +84,7 @@ function NavBar() {
       />
       <SignIn />
       <SignOut />
+      <ProfileNav />
     </nav>
   );
 }
