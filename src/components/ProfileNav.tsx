@@ -14,7 +14,7 @@ export default function ProfileNav() {
     return (
       <button
         onClick={() => signIn()}
-        className="ring-primary flex flex-row place-items-center gap-2 rounded-full border-2 border-black px-1 align-middle transition-all duration-150 hover:ring-4"
+        className="ring-primary w-fit flex flex-row place-items-center gap-2 rounded-full border-2 border-black px-1 align-middle transition-all duration-150 hover:ring-4"
       >
         <svg
           className="stroke-foreground ring-primary rounded-full fill-none"
@@ -30,7 +30,7 @@ export default function ProfileNav() {
           <circle cx="12" cy="10" r="4"></circle>
           <path d="M18 20a6 6 0 0 0-12 0"></path>
         </svg>
-        <div>Sign In</div>
+        <div className="text-nowrap">Sign In</div>
       </button>
     );
   }
