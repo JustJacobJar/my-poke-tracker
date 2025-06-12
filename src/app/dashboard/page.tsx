@@ -7,11 +7,11 @@ export default async function Dashboard() {
 
   return (
     <>
-      <div className="flex flex-col place-items-center gap-4 p-4">
+      <div className="grid xl:grid-cols-2 grid-cols-1 flex-wrap w-full 2xl:w-4/5 place-self-center place-items-center gap-4 p-4">
         {teams.map((data, index) => {
           return (
             <a
-              className="bg-card rounded-2xl border-2 p-2"
+              className="bg-card rounded-2xl flex flex-col w-full border-2 p-2"
               href={`/team/${data.id}`}
               key={index}
             >

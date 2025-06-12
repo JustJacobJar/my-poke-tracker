@@ -1,7 +1,6 @@
 "use server";
 
 import { prisma } from "@/app/prisma";
-import SignIn from "@/components/SignIn";
 import PokeTeamStandard from "@/components/Teams/PokeTeamStandard";
 import { auth } from "@/lib/auth";
 
@@ -11,33 +10,18 @@ export default async function CollectionPage() {
     where: { authorId: session?.user?.id },
   }); //pagenate this
 
-  const loggedIn = () => {
-    if (!session) {
-      return (
-        <div>
-          <p>Not logged in, please log in</p>
-          <SignIn />
-          {/* Redirect to login page */}
-        </div>
-      );
-    }
-    return (
-      <div>
-        This is where all of your teams would be shown with a little edit icon
-        in case you want to change them
-      </div>
-    );
-  };
-
   return (
-    <>
-      <div>{loggedIn()}</div>
+    <div className="flex w-full flex-col place-items-center place-self-center">
       <h1>My Teams</h1>
-      <div className="flex flex-col place-items-center gap-4">
+      <div className="grid w-full grid-cols-1 flex-wrap place-items-center gap-4 place-self-center p-4 xl:grid-cols-2 2xl:w-4/5">
         {myCollections.map((data, index) => {
-          return <PokeTeamStandard pokeTeam={data} key={index} />;
+          return (
+            <div className="bg-card rounded-2xl flex flex-col w-full border-2 px-2" key={index}>
+              <PokeTeamStandard pokeTeam={data} />
+            </div>
+          );
         })}
       </div>
-    </>
+    </div>
   );
 }

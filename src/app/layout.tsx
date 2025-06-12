@@ -52,8 +52,8 @@ export default function RootLayout({
 
 function NavBar() {
   return (
-    <div className="bg-card grid grid-cols-5 place-items-center px-16 outline">
-      <div className="justify-self-start">
+    <div className="bg-card flex place-content-center place-items-center outline px-8 relative">
+      <div className="fixed start-8 justify-self-start shrink">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -70,7 +70,7 @@ function NavBar() {
           <path d="M12 22V12"></path>
         </svg>
       </div>
-      <nav className="flex h-16 col-span-3 w-full flex-row place-content-evenly place-items-center place-self-center xl:w-3/5">
+      <nav className="flex h-16 w-full flex-row place-content-evenly place-items-center xl:w-3/5">
         <NavLink link="/dashboard" content={<p>Dashboard</p>} />
         <NavLink
           link="/dashboard/collections/create"
@@ -101,7 +101,7 @@ function NavBar() {
         />
         <NavLink link="/dashboard/collections" content={<p>Collections</p>} />
       </nav>
-      <div className="justify-self-end">
+      <div className="end-8 fixed justify-self-end">
         <ProfileNav />
       </div>
     </div>

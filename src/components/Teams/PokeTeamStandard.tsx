@@ -53,7 +53,7 @@ export default async function PokeTeamStandard({
 
   return (
     <Suspense fallback={<PokeTeamSkeleton />}>
-      <div className="size-fit p-2">
+      <div className="p-2 flex flex-col w-full gap-4">
         <div className="flex flex-row place-content-between px-4">
           <div className="flex flex-col">
             <h1>{pokeTeam.name}</h1>
