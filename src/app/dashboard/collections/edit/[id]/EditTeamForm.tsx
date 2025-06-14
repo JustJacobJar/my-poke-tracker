@@ -66,7 +66,9 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
           );
         })}
         <div className="col-span-3 flex w-full flex-row place-content-end gap-8 p-2 outline">
-          <p aria-live="polite">{editFormState.message}</p>
+          <p aria-live="polite">
+            {deleteFormState.message && editFormState.message}
+          </p>
 
           <button type="button" onClick={() => setOpen(true)}>
             Delete
