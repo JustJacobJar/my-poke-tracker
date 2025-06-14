@@ -75,7 +75,7 @@ export default function PokeCardInput({
   };
 
   return (
-    <div className="flex aspect-[3/4] w-64 flex-col place-content-around place-items-center rounded-xl border-4 border-dashed">
+    <div className="flex aspect-[3/4] flex-col place-content-around place-items-center rounded-xl border-4 border-dashed">
       {inputField()}
     </div>
   );

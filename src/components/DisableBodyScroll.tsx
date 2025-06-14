@@ -1,5 +1,5 @@
 // @/components/DisableBodyScroll.js
-import React, { Component } from "react";
+import { Component } from "react";
 
 class DisableBodyScroll extends Component {
   componentDidMount() {

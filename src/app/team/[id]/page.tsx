@@ -26,7 +26,7 @@ export default async function TeamView({
   }
 
   return (
-    <div className="flex w-full p-4 xl:w-2/3 2xl:w-1/2 justify-self-center place-content-center  outline">
+    <div className="flex w-full p-4 xl:w-2/3 2xl:w-1/2 justify-self-center place-content-center">
       <PokeTeamStandard pokeTeam={team} extended={true} />
     </div>
   );

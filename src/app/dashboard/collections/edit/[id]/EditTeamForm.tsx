@@ -7,6 +7,7 @@ import Modal from "@/components/Modal";
 import { DeleteTeam, EditTeam } from "@/app/server/submitActions";
 import { FormState } from "@/lib/types";
 import SubmitButton from "@/components/SubmitButton";
+import { useFormStatus } from "react-dom";
 
 export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
   const [editFormState, editFormAction] = useActionState(
@@ -17,6 +18,7 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
     DeleteTeam,
     {} as FormState,
   );
+  const { pending } = useFormStatus();
   const [open, setOpen] = useState(false); //modal open close
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -52,28 +54,36 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
 
   return (
     <>
-      <form
-        onSubmit={onSubmit}
-        className="grid w-fit grid-cols-3 gap-4 outline"
-      >
-        {team.pokemon.map((slot, index) => {
-          return (
-            <PokeCardInput
-              key={index}
-              inputId={`slot${index}`}
-              editValue={slot}
-            />
-          );
-        })}
-        <div className="col-span-3 flex w-full flex-row place-content-end gap-8 p-2 outline">
+      <form onSubmit={onSubmit} className="flex w-full flex-col">
+        {/* Cards */}
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+          {team.pokemon.map((slot, index) => {
+            return (
+              <PokeCardInput
+                key={index}
+                inputId={`slot${index}`}
+                editValue={slot}
+              />
+            );
+          })}
+        </div>
+        {/* Buttons */}
+        <div className="flex w-full flex-row place-content-end gap-4 p-2">
           <p aria-live="polite">
             {deleteFormState.message && editFormState.message}
           </p>
 
-          <button type="button" onClick={() => setOpen(true)}>
+          <button
+            className="bg-destructive text-background"
+            type="button"
+            onClick={() => setOpen(true)}
+          >
             Delete
           </button>
-          <SubmitButton text="Submit" />
+          <SubmitButton
+            className="bg-primary text-background rounded-md p-2 px-4 transition-all duration-150 hover:brightness-125 disabled:brightness-50"
+            text="Submit"
+          />
         </div>
       </form>
       <Modal
@@ -85,13 +95,14 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
           <>
             {" "}
             <button
-              className="rounded-lg bg-neutral-300 p-2 hover:brightness-110"
+              className="rounded-lg bg-neutral-300 hover:brightness-110"
               onClick={() => setOpen(false)}
             >
               Cancel
             </button>
             <button
-              className="bg-destructive rounded-lg p-2 text-white hover:brightness-110"
+              disabled={pending}
+              className="bg-destructive rounded-lg text-white hover:brightness-110"
               onClick={onDelete}
             >
               Confirm

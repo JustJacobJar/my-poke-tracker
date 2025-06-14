@@ -42,7 +42,7 @@ export default function Modal({
         <div className="flex flex-row place-content-between">
           <div className="text-lg font-bold">{titleContent}</div>
           <button
-            className="stroke-foreground hover:stroke-destructive hover:bg-destructive/20 aspect-square h-fit rounded-lg"
+            className="stroke-foreground hover:stroke-destructive hover:bg-destructive/20 aspect-square h-fit rounded-lg p-1"
             onClick={cancelFn}
           >
             <svg

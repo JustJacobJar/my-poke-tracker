@@ -14,7 +14,7 @@ export default function ProfileNav() {
     return (
       <button
         onClick={() => signIn()}
-        className="ring-primary w-fit flex flex-row place-items-center gap-2 rounded-full border-2 border-black px-1 align-middle transition-all duration-150 hover:ring-4"
+        className="ring-primary w-fit flex flex-row place-items-center gap-2 rounded-full border-2 border-black p-0 px-1 align-middle transition-all duration-150 hover:ring-4"
       >
         <svg
           className="stroke-foreground ring-primary rounded-full fill-none"
@@ -36,10 +36,10 @@ export default function ProfileNav() {
   }
 
   return (
-    <div className="relative">
+    <div className="relative z-50">
       <button
         onClick={() => setOpen(true)}
-        className="stroke-foreground ring-primary rounded-full fill-none align-middle transition-all duration-150 hover:ring-4"
+        className="stroke-foreground p-0 ring-primary rounded-full fill-none align-middle transition-all duration-150 hover:ring-4"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

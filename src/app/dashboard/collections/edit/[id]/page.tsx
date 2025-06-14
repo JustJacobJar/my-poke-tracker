@@ -33,8 +33,10 @@ export default async function EditTeamPage({
   }
 
   return (
-    <Suspense fallback={<PokeTeamSkeleton />}>
-      <EditTeamFormPage team={team} />
-    </Suspense>
+    <div className="flex w-full xl:w-2/3 2xl:w-1/2 justify-self-center place-content-center p-4">
+      <Suspense fallback={<PokeTeamSkeleton />}>
+        <EditTeamFormPage team={team} />
+      </Suspense>
+    </div>
   );
 }
