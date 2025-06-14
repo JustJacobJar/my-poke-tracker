@@ -20,13 +20,13 @@ export default async function EditTeamPage({
     },
   });
 
-  const author = await prisma.user.findUnique({
-    where: { id: team?.authorId },
-  });
-
   if (!team) {
     return <div>Team Not Found!</div>;
   }
+
+  const author = await prisma.user.findUnique({
+    where: { id: team?.authorId },
+  });
 
   if (session?.user?.id !== author?.id) {
     return <div>This is not your team to edit</div>;

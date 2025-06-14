@@ -5,3 +5,8 @@ export interface IPokeTeam {
   description: string | null;
   authorId?: string;
 }
+
+export type FormState = {
+  message: string;
+  success: boolean;
+};

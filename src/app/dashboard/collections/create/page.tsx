@@ -1,41 +1,35 @@
 "use client";
 
+import { CreateTeam } from "@/app/server/submitActions";
 import PokeCardInput from "@/components/Cards/PokeCardInput";
-import { IPokeTeam } from "@/lib/types";
-import { FormEvent } from "react";
+import SubmitButton from "@/components/SubmitButton";
+import { FormState, IPokeTeam } from "@/lib/types";
+import { FormEvent, startTransition, useActionState } from "react";
 
-export default function CreateTeam() {
+export default function CreateTeamPage() {
+  const [formState, formAction] = useActionState(CreateTeam, {} as FormState);
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    // "use server";
-
     //validation
     event.preventDefault();
 
+    //Format data
     const formData = new FormData(event.currentTarget);
-
-    const rawFormData = {
+    const rawFormData: IPokeTeam = {
       name: "DefaultName",
       // name: formData.get("name"),
       pokemon: [
-        formData.get("slot0"),
-        formData.get("slot1"),
-        formData.get("slot2"),
-        formData.get("slot3"),
-        formData.get("slot4"),
-        formData.get("slot5"),
+        formData.get("slot0") as string,
+        formData.get("slot1") as string,
+        formData.get("slot2") as string,
+        formData.get("slot3") as string,
+        formData.get("slot4") as string,
+        formData.get("slot5") as string,
       ],
       description: "Some description",
       // description: formData.get("description"),
     };
-
-    const response = await fetch("/api/submit", {
-      method: "POST",
-      body: JSON.stringify(rawFormData as IPokeTeam),
-    });
-
-    //Handle response and that
-    const data = await response.json();
-    console.log(data);
+    startTransition(() => formAction(rawFormData));
   }
 
   const inputs = () => {
@@ -50,7 +44,8 @@ export default function CreateTeam() {
     <>
       <form onSubmit={onSubmit} className="grid w-fit grid-cols-3 gap-4">
         {inputs()}
-        <button type="submit">Submit</button>
+        <p aria-live="polite">{formState.message}</p>
+        <SubmitButton text="submit" />
       </form>
     </>
   );

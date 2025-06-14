@@ -1,52 +1,53 @@
 "use client";
 
 import PokeCardInput from "@/components/Cards/PokeCardInput";
-import { FormEvent, useState } from "react";
+import { FormEvent, startTransition, useActionState, useState } from "react";
 import { PokemonTeam } from "../../../../../../generated/prisma";
 import Modal from "@/components/Modal";
+import { DeleteTeam, EditTeam } from "@/app/server/submitActions";
+import { FormState } from "@/lib/types";
+import SubmitButton from "@/components/SubmitButton";
 
 export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
+  const [editFormState, editFormAction] = useActionState(
+    EditTeam,
+    {} as FormState,
+  );
+  const [deleteFormState, deleteFormAction] = useActionState(
+    DeleteTeam,
+    {} as FormState,
+  );
   const [open, setOpen] = useState(false); //modal open close
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    //Validation
     event.preventDefault();
+
     //Check that the data is actually getting changed?
 
+    //Format data
     const formData = new FormData(event.currentTarget);
-
     const rawFormData = {
       id: team.id,
       name: "DefaultName",
       // name: formData.get("name"),
       pokemon: [
-        formData.get("slot0"),
-        formData.get("slot1"),
-        formData.get("slot2"),
-        formData.get("slot3"),
-        formData.get("slot4"),
-        formData.get("slot5"),
+        formData.get("slot0") as string,
+        formData.get("slot1") as string,
+        formData.get("slot2") as string,
+        formData.get("slot3") as string,
+        formData.get("slot4") as string,
+        formData.get("slot5") as string,
       ],
       description: "Some description",
       // description: formData.get("description"),
     };
 
-    const response = await fetch("/api/submit", {
-      method: "PATCH",
-      body: JSON.stringify(rawFormData),
-    });
-
-    const data = await response.json();
-    console.log(data);
+    startTransition(() => editFormAction(rawFormData));
   }
 
   async function onDelete() {
-    const response = await fetch("/api/submit", {
-      method: "DELETE",
-      body: JSON.stringify({ id: team.id }),
-    });
-
-    const data = await response.json();
-    console.log(data);
+    startTransition(() => deleteFormAction(team.id));
   }
 
   return (
@@ -65,10 +66,12 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
           );
         })}
         <div className="col-span-3 flex w-full flex-row place-content-end gap-8 p-2 outline">
+          <p aria-live="polite">{editFormState.message}</p>
+
           <button type="button" onClick={() => setOpen(true)}>
             Delete
           </button>
-          <button type="submit">Submit</button>
+          <SubmitButton text="Submit" />
         </div>
       </form>
       <Modal
