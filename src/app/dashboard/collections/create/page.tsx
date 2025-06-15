@@ -16,8 +16,7 @@ export default function CreateTeamPage() {
     //Format data
     const formData = new FormData(event.currentTarget);
     const rawFormData: IPokeTeam = {
-      name: "DefaultName",
-      // name: formData.get("name"),
+      name: formData.get("name") as string,
       pokemon: [
         formData.get("slot0") as string,
         formData.get("slot1") as string,
@@ -26,8 +25,7 @@ export default function CreateTeamPage() {
         formData.get("slot4") as string,
         formData.get("slot5") as string,
       ],
-      description: "Some description",
-      // description: formData.get("description"),
+      description: formData.get("description") as string,
     };
     startTransition(() => formAction(rawFormData));
   }
@@ -41,12 +39,43 @@ export default function CreateTeamPage() {
   };
 
   return (
-    <>
-      <form onSubmit={onSubmit} className="grid w-fit grid-cols-3 gap-4">
-        {inputs()}
+    <form
+      onSubmit={onSubmit}
+      className="flex w-full flex-col place-content-center gap-4 justify-self-center p-4 xl:w-2/3 2xl:w-1/2"
+    >
+      <div className="flex flex-row place-items-center gap-2">
+        <svg
+          className="stroke-foreground"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M17 6.1H3"></path>
+          <path d="M21 12.1H3"></path>
+          <path d="M15.1 18H3"></path>
+        </svg>
+        <input
+          className="w-3/4 rounded-lg border-2 p-1 text-lg md:w-1/2"
+          placeholder="Team Name"
+          type="text"
+          name="name"
+        />
+      </div>
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3">{inputs()}</div>
+      <textarea
+        name="description"
+        className="min-h-24 rounded-lg border-2 px-2"
+        placeholder={"Some description"}
+      />
+      <div className="flex flex-row place-content-end gap-2">
         <p aria-live="polite">{formState.message}</p>
-        <SubmitButton text="submit" />
-      </form>
-    </>
+        <SubmitButton text="submit" className="bg-primary w-fit" />
+      </div>
+    </form>
   );
 }

@@ -37,8 +37,8 @@ export default function Modal({
         className="fixed top-0 right-0 bottom-0 left-0 z-40 flex bg-black/20"
         onClick={cancelFn}
       />
-      <DisableBodyScroll />
-      <div className="bg-card fixed top-1/2 left-1/2 z-50 flex w-fit -translate-1/2 flex-col rounded-2xl border-2 p-4 shadow-md">
+      {/* <DisableBodyScroll /> */}
+      <div className="bg-card fixed top-1/2 left-1/2 z-50 flex w-fit -translate-1/2 flex-col rounded-2xl border-2 p-4 shadow-md overflow-clip">
         <div className="flex flex-row place-content-between">
           <div className="text-lg font-bold">{titleContent}</div>
           <button

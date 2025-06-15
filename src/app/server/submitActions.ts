@@ -5,6 +5,7 @@ import { prisma } from "@/app/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { FormState, IPokeTeam } from "@/lib/types";
+import { tr } from "zod/v4/locales";
 
 export async function CreateTeam(initialState: any, teamData: IPokeTeam) {
   //Auth the user
@@ -109,7 +110,11 @@ export async function EditTeam(initialState: any, teamData: IPokeTeam) {
   redirect(`/team/${validated.data.id}`);
 }
 
-export async function DeleteTeam(initialState: any, teamId: string) {
+export async function DeleteTeam(
+  initialState: any,
+  teamId: string,
+  redir = true,
+) {
   //Auth user
   const session = await auth();
   if (!session?.user?.id)
@@ -146,7 +151,15 @@ export async function DeleteTeam(initialState: any, teamId: string) {
 
   //Successfully deleted
   revalidatePath("/dashboard/collections");
-  redirect("/dashboard/collections/");
+  if (redir) redirect("/dashboard/collections/");
+  return {
+    message: `Successfully deleted team:${teamId}`,
+    success: true,
+  } as FormState;
+}
+
+export async function DeleteTeamNoRedirect(initialState: any, teamId: string) {
+  return DeleteTeam(initialState, teamId, false);
 }
 
 const IPokeTeamZ = z.object({
