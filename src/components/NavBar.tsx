@@ -4,7 +4,7 @@ import ProfileNav from "./ProfileNav";
 
 export default function NavBar() {
   return (
-    <div className="bg-card relative flex place-content-center place-items-center px-8 outline">
+    <div className="bg-card/90 backdrop-blur-xl relative flex place-content-center place-items-center px-8 drop-shadow-sm">
       <div className="fixed start-8 shrink justify-self-start">
         <svg
           xmlns="http://www.w3.org/2000/svg"
