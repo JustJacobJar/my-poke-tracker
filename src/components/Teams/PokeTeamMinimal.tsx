@@ -16,6 +16,8 @@ export default function PokeTeamMinimal({ pokeTeam }: { pokeTeam: IPokeTeam }) {
   };
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">{pokemon(pokeTeam)}</div>
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+      {pokemon(pokeTeam)}
+    </div>
   );
 }
