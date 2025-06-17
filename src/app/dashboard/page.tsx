@@ -1,28 +1,26 @@
 "use server";
 import prisma from "@/lib/prisma";
-import Link from "next/link";
-
-import PokeTeam from "@/components/Cards/PokeTeam";
+import PokeTeamMinimal from "@/components/Teams/PokeTeamMinimal";
 
 export default async function Dashboard() {
-  const teams = await prisma.pokemonTeam.findMany();
+  const teams = await prisma.pokemonTeam.findMany(); //pagenate this
 
   return (
     <>
-      <nav className="bg-card flex h-16 w-full flex-row place-content-evenly place-items-center">
-        <Link className="bg-primary rounded-md px-4 py-2" href={"/dashboard"}>
-          Home
-        </Link>
-        <Link className="bg-primary rounded-md px-4 py-2" href={"/dashboard"}>
-          Collections
-        </Link>
-        <Link className="bg-primary rounded-md px-4 py-2" href={"/dashboard"}>
-          Login
-        </Link>
-      </nav>
-      <div className="flex flex-col place-items-center gap-4 p-4">
+      <div className="grid w-full grid-cols-1 flex-wrap place-items-center gap-4 place-self-center p-4 xl:grid-cols-2 2xl:w-4/5">
         {teams.map((data, index) => {
-          return <PokeTeam pokeTeam={data} key={index} />;
+          return (
+            <a
+              className="bg-card flex w-full flex-col rounded-2xl border-2 p-2"
+              href={`/team/${data.id}`}
+              key={index}
+            >
+              <h1 className="px-2 pb-2 text-lg">
+                {data.name ? data.name : "No team name"}
+              </h1>
+              <PokeTeamMinimal pokeTeam={data} />
+            </a>
+          );
         })}
       </div>
     </>

@@ -1,6 +1,7 @@
 "use client";
 
-import { PokeCardSkeleton } from "./PokeCardsSkeleton";
+import { PokeCardSkeleton } from "../Cards/PokeCardsSkeleton";
+
 
 export default function PokeTeamSkeleton() {
   return (

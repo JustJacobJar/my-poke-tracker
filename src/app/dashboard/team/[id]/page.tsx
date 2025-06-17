@@ -1,9 +1,7 @@
 "use server";
 
-import PokeTeam from "@/components/Cards/PokeTeam";
-import PokeTeamSkeleton from "@/components/Cards/PokeTeamSkeleton";
+import PokeTeamStandard from "@/components/Teams/PokeTeamStandard";
 import prisma from "@/lib/prisma";
-import { Suspense } from "react";
 
 export default async function TeamView({
   params,
@@ -12,6 +10,7 @@ export default async function TeamView({
 }) {
   const { id } = await params;
 
+  //Team to display
   const team = await prisma.pokemonTeam.findUnique({
     where: {
       id: id,
@@ -27,10 +26,8 @@ export default async function TeamView({
   }
 
   return (
-    <div>
-      <Suspense fallback={<PokeTeamSkeleton />}>
-        <PokeTeam pokeTeam={team} />
-      </Suspense>
+    <div className="flex w-full p-4 xl:w-2/3 2xl:w-1/2 justify-self-center place-content-center">
+      <PokeTeamStandard pokeTeam={team} extended={true} />
     </div>
   );
 }
