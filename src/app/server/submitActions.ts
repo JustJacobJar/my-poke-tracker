@@ -46,7 +46,7 @@ export async function CreateTeam(initialState: any, teamData: IPokeTeam) {
 
   //Success, redirect user to the created team
   revalidatePath("/team");
-  redirect(`/team/${teamId}`);
+  redirect(`/dashboard/team/${teamId}`);
 }
 
 export async function EditTeam(initialState: any, teamData: IPokeTeam) {
@@ -107,7 +107,7 @@ export async function EditTeam(initialState: any, teamData: IPokeTeam) {
 
   //Succesfully edited, redirect user to team
   revalidatePath("/team");
-  redirect(`/team/${validated.data.id}`);
+  redirect(`/dashboard/team/${validated.data.id}`);
 }
 
 export async function DeleteTeam(

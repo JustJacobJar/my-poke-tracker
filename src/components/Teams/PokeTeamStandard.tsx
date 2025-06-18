@@ -2,8 +2,6 @@ import { prisma } from "@/app/prisma";
 import { auth } from "@/lib/auth";
 import { IPokeTeam } from "@/lib/types";
 import PokeTeamMinimal from "./PokeTeamMinimal";
-import { Suspense } from "react";
-import PokeTeamSkeleton from "./PokeTeamSkeleton";
 import DeleteButtonModal from "../DeleteButtonModal";
 
 /**
@@ -62,36 +60,32 @@ export default async function PokeTeamStandard({
   };
 
   return (
-    <Suspense fallback={<PokeTeamSkeleton />}>
-      <div className="flex w-full flex-col gap-4 p-2">
-        <div className="flex flex-row place-content-between px-4">
-          <div className="flex flex-col">
-            {/* Maybe make this clickable link */}
-            <a
-              className={redirect ? "pointer-events-none" : ""}
-              href={`/team/${pokeTeam.id}`}
-            >
-              <h1 className="text-lg hover:underline">
-                {pokeTeam.name ? pokeTeam.name : "No team name"}
-              </h1>
-            </a>
-            <h2>Created by: {author?.name ? author.name : "Not Found"}</h2>
-          </div>
-          <div className="flex flex-row gap-4">
-            {deleteButton()}
-            {editButton()}
-          </div>
+    <div className="flex grow w-full flex-col gap-4 pt-2">
+      <div className="flex flex-row place-content-between px-4">
+        <div className="flex flex-col">
+          <a
+            className={redirect ? "pointer-events-none" : ""}
+            href={`/dashboard/team/${pokeTeam.id}`}
+          >
+            <h1 className="text-lg hover:underline">
+              {pokeTeam.name ? pokeTeam.name : "No team name"}
+            </h1>
+          </a>
+          <h2>Created by: {author?.name ? author.name : "Not Found"}</h2>
         </div>
-        <PokeTeamMinimal pokeTeam={pokeTeam} />
-        <p className="px-2">
-          {extended
-            ? pokeTeam.description
-              ? pokeTeam.description
-              : "No team description"
-            : null}
-        </p>
+        <div className="flex flex-row gap-4">
+          {deleteButton()}
+          {editButton()}
+        </div>
       </div>
-      {/* Modal */}
-    </Suspense>
+      <PokeTeamMinimal pokeTeam={pokeTeam} />
+      <p className="px-2">
+        {extended
+          ? pokeTeam.description
+            ? pokeTeam.description
+            : "No team description"
+          : null}
+      </p>
+    </div>
   );
 }
