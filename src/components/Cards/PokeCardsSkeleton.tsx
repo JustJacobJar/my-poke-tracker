@@ -18,6 +18,6 @@ export function PokeCardSkeleton() {
 
 export function PokeCardEmpty() {
   return (
-    <div className="flex aspect-[3/4] h-full w-full flex-col place-content-around place-items-center rounded-xl border-4 border-dashed"></div>
+    <div className="flex aspect-[9/13] h-full min-w-44 grow flex-col place-content-around place-items-center rounded-xl border-4 border-dashed"></div>
   );
 }

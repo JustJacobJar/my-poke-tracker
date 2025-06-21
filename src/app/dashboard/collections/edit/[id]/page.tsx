@@ -31,7 +31,7 @@ export default async function EditTeamPage({
   }
 
   return (
-    <div className="flex w-full xl:w-2/3 2xl:w-1/2 justify-self-center place-content-center p-4">
+    <div className="flex w-11/12 max-w-4xl justify-self-center place-content-center p-4">
         <EditTeamFormPage team={team} />
     </div>
   );

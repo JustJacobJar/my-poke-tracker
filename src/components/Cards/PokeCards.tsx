@@ -9,24 +9,24 @@ import Image from "next/image";
 const baseApiUrl = "https://pokeapi.co/api/v2/pokemon-form/";
 
 const typeColour: { [type: string]: string } = {
-  normal: "bg-[#AAAB98] ",
-  fire: "bg-[#FE4423]",
-  water: "bg-[#3299FE]",
-  electric: "bg-[#FECC32]",
-  grass: "bg-[#76CD55]",
-  ice: "bg-[#66CDFE]",
-  fighting: "bg-[#BB5445]",
-  poison: "bg-[#AA5599]",
-  ground: "bg-[#DCBB54]",
-  flying: "bg-[#8999FE]",
-  psychic: "bg-[#FF5498]",
-  bug: "bg-[#ABBA22]",
-  rock: "bg-[#BAAA67]",
-  ghost: "bg-[#6767BB]",
+  normal: "bg-[#AAAB98] text-black",
+  fire: "bg-[#FE4423] text-black",
+  water: "bg-[#3299FE] text-black",
+  electric: "bg-[#FECC32] text-black",
+  grass: "bg-[#76CD55] text-black",
+  ice: "bg-[#66CDFE] text-black",
+  fighting: "bg-[#BB5445] text-black",
+  poison: "bg-[#AA5599] text-black",
+  ground: "bg-[#DCBB54] text-black",
+  flying: "bg-[#8999FE] text-black",
+  psychic: "bg-[#FF5498] text-black",
+  bug: "bg-[#ABBA22] text-black",
+  rock: "bg-[#BAAA67] text-black",
+  ghost: "bg-[#6767BB] text-black",
   dragon: "bg-[#7766EE] text-white",
   dark: "bg-[#765545] text-white",
-  steel: "bg-[#AAAABB]",
-  fairy: "bg-[#EF99EF]",
+  steel: "bg-[#AAAABB] text-black",
+  fairy: "bg-[#EF99EF] text-black",
 };
 
 function TypeLable({ type }: { type: string }) {
@@ -36,7 +36,7 @@ function TypeLable({ type }: { type: string }) {
 
   return (
     <label
-      className={`${typeColour[type]} text-dark-xd w-1/3 min-w-fit grow rounded-md p-1 text-center text-sm sm:rounded-lg sm:text-base`}
+      className={`${typeColour[type]} text-dark-xd w-full min-w-fit rounded-md p-1 text-center text-base`}
     >
       {type.charAt(0).toUpperCase() + type.slice(1)}
     </label>
@@ -76,7 +76,7 @@ export function PokeCard({ name }: { name: string }) {
   const [data] = usePokeQuery(name);
 
   return (
-    <div className="bg-card inset-ring-border flex aspect-[3/4] w-full flex-col place-content-around place-items-center gap-2 rounded-xl p-4 shadow-sm inset-ring-4">
+    <div className="bg-card inset-ring-border aspect-[9/13] flex min-w-44 grow flex-col place-content-around place-items-center gap-2 rounded-xl p-4 shadow-sm inset-ring-4">
       <label>{name.charAt(0).toUpperCase() + name.slice(1)}</label>
       <Suspense fallback={<ImageLoading />}>
         <Image

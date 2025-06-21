@@ -41,7 +41,7 @@ export default function CreateTeamPage() {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex w-full flex-col place-content-center gap-4 justify-self-center p-4 xl:w-2/3 2xl:w-1/2"
+      className="flex w-11/12 max-w-4xl flex-col place-content-center gap-4 justify-self-center p-4 xl:w-2/3 2xl:w-1/2"
     >
       <div className="flex flex-row place-items-center gap-2">
         <svg
@@ -74,7 +74,7 @@ export default function CreateTeamPage() {
       />
       <div className="flex flex-row place-content-end gap-2">
         <p aria-live="polite">{formState.message}</p>
-        <SubmitButton text="submit" className="bg-primary w-fit" />
+        <SubmitButton text="submit" className="bg-primary text-primary-foreground" />
       </div>
     </form>
   );

@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/app/prisma";
+import Feed from "@/components/Feed";
 import PokeTeamStandard from "@/components/Teams/PokeTeamStandard";
 import { auth } from "@/lib/auth";
 
@@ -12,8 +13,9 @@ export default async function CollectionPage() {
 
   return (
     <div className="flex w-full flex-col place-items-center place-self-center">
-      <h1 className="text-4xl py-8 font-bold">Your Teams</h1>
-      <div className="grid w-full grid-cols-1 flex-wrap place-items-center gap-4 place-self-center p-4 xl:grid-cols-3 2xl:w-4/5">
+      <h1 className="py-8 text-4xl font-bold">Your Teams</h1>
+      <Feed>
+        {/* <div className="grid w-full grid-cols-1 flex-wrap place-items-center gap-4 place-self-center p-4 xl:grid-cols-3 2xl:w-4/5"> */}
         {myCollections.map((data, index) => {
           return (
             <div
@@ -24,7 +26,8 @@ export default async function CollectionPage() {
             </div>
           );
         })}
-      </div>
+        {/* </div> */}
+      </Feed>
     </div>
   );
 }

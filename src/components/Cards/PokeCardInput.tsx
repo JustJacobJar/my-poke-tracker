@@ -48,7 +48,7 @@ export default function PokeCardInput({
       <div className="relative size-full place-content-center">
         <button
           onMouseDown={() => toggleEdit(false)}
-          className="stroke-border hover:stroke-destructive absolute top-0 right-0 w-16 transition-colors duration-150"
+          className="stroke-border hover:stroke-destructive absolute top-0 right-0 w-16 rotate-45 rounded-full p-2 transition-colors duration-150"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +75,7 @@ export default function PokeCardInput({
   };
 
   return (
-    <div className="flex aspect-[3/4] flex-col place-content-around place-items-center rounded-xl border-4 border-dashed">
+    <div className="flex aspect-[9/13] w-full flex-col place-content-around place-items-center rounded-xl border-4 border-dashed">
       {inputField()}
     </div>
   );

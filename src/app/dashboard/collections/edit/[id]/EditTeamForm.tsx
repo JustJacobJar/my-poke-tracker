@@ -8,6 +8,7 @@ import { DeleteTeam, EditTeam } from "@/app/server/submitActions";
 import { FormState } from "@/lib/types";
 import SubmitButton from "@/components/SubmitButton";
 import { useFormStatus } from "react-dom";
+import DeleteButtonModal from "@/components/DeleteButtonModal";
 
 export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
   const [editFormState, editFormAction] = useActionState(
@@ -103,20 +104,14 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
             {deleteFormState.message && editFormState.message}
           </p>
 
-          <button
-            className="bg-destructive text-background"
-            type="button"
-            onClick={() => setOpen(true)}
-          >
-            Delete
-          </button>
+          <DeleteButtonModal teamId={team.id} redirect={true} />
           <SubmitButton
-            className="bg-primary text-background rounded-md p-2 px-4 transition-all duration-150 hover:brightness-125 disabled:brightness-50"
+            className="bg-primary text-primary-foreground"
             text="Submit"
           />
         </div>
       </form>
-      <Modal
+      {/* <Modal
         open={open}
         cancelFn={() => setOpen(false)}
         titleContent={<h1>Delete Team?</h1>}
@@ -132,14 +127,14 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
             </button>
             <button
               disabled={pending}
-              className="bg-destructive rounded-lg text-white hover:brightness-110"
+              className="bg-destructive text-destructive-foreground rounded-lg hover:brightness-110"
               onClick={onDelete}
             >
               Confirm
             </button>
           </>
         }
-      />
+      /> */}
     </>
   );
 }

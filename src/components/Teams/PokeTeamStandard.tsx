@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { IPokeTeam } from "@/lib/types";
 import PokeTeamMinimal from "./PokeTeamMinimal";
 import DeleteButtonModal from "../DeleteButtonModal";
+import Link from "next/link";
 
 /**
  *
@@ -29,9 +30,9 @@ export default async function PokeTeamStandard({
   const editButton = () => {
     if (session?.user?.id === pokeTeam.authorId) {
       return (
-        <a
+        <Link
           href={`/dashboard/collections/edit/${pokeTeam.id}`}
-          className="bg-secondary stroke-foreground hover:stroke-card aspect-square place-self-center rounded-md p-2 transition-all duration-150 hover:brightness-125"
+          className="bg-secondary stroke-secondary-foreground aspect-square place-self-center rounded-md p-2 transition-all duration-150 hover:inset-ring-1 hover:brightness-90"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +47,7 @@ export default async function PokeTeamStandard({
             <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path>
             <path d="m15 5 4 4"></path>
           </svg>
-        </a>
+        </Link>
       );
     }
     return;
@@ -60,7 +61,7 @@ export default async function PokeTeamStandard({
   };
 
   return (
-    <div className="flex grow w-full flex-col gap-4 pt-2">
+    <div className="flex w-full flex-col gap-4 pt-2">
       <div className="flex flex-row place-content-between px-4">
         <div className="flex flex-col">
           <a

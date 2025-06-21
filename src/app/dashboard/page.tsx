@@ -1,17 +1,19 @@
 "use server";
 import prisma from "@/lib/prisma";
 import PokeTeamMinimal from "@/components/Teams/PokeTeamMinimal";
+import Feed from "@/components/Feed";
 
 export default async function Dashboard() {
   const teams = await prisma.pokemonTeam.findMany(); //pagenate this
 
   return (
     <>
-      <div className="grid w-full grid-cols-1 flex-wrap place-items-center gap-4 place-self-center p-4 xl:grid-cols-3 2xl:w-4/5">
+      {/* <div className="grid w-full grid-cols-1 flex-wrap place-items-center gap-4 place-self-center p-4 md:grid-cols-2 2xl:grid-cols-3 2xl:w-[96rem]"> */}
+      <Feed>
         {teams.map((data, index) => {
           return (
             <a
-              className="bg-card flex w-full h-full flex-col rounded-2xl border-2 p-2 "
+              className="bg-card h-full grow flex flex-col rounded-2xl border-2 p-2"
               href={`/dashboard/team/${data.id}`}
               key={index}
             >
@@ -22,7 +24,8 @@ export default async function Dashboard() {
             </a>
           );
         })}
-      </div>
+      </Feed>
+      {/* </div> */}
     </>
   );
 }
