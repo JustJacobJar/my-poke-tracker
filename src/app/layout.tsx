@@ -26,22 +26,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-      >
+    <html lang="en" suppressHydrationWarning>
+      <body className={`antialiased`}>
         <Providers>
-          <body
-            className={`antialiased`}
-          >
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <SessionProvider>
               <div>{children}</div>
             </SessionProvider>
-          </body>
+          </ThemeProvider>
         </Providers>
-      </ThemeProvider>
+      </body>
     </html>
   );
 }
