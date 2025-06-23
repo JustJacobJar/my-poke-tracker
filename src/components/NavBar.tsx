@@ -1,18 +1,19 @@
 import Link from "next/link";
 import { JSX } from "react";
 import ProfileNav from "./ProfileNav";
+import ThemeToggle from "./ThemeToggle";
 
 export default function NavBar() {
   return (
-    <div className="bg-card/90 backdrop-blur-xl relative flex place-content-center place-items-center px-8 drop-shadow-sm">
-      <div className="fixed start-8 shrink justify-self-start">
+    <div className="bg-card/90 relative flex place-content-center place-items-center px-8 drop-shadow-sm backdrop-blur-xl">
+      {/* Logo */}
+      <div className="stroke-foreground fixed start-8 shrink justify-self-start">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#000000"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -22,6 +23,7 @@ export default function NavBar() {
           <path d="M12 22V12"></path>
         </svg>
       </div>
+      {/* Center Nav */}
       <nav className="flex h-16 w-full flex-row place-content-evenly place-items-center xl:w-3/5">
         <NavLink link="/dashboard" content={<p>Dashboard</p>} />
         <NavLink
@@ -53,7 +55,9 @@ export default function NavBar() {
         />
         <NavLink link="/dashboard/collections" content={<p>Collections</p>} />
       </nav>
-      <div className="fixed end-8 z-50 justify-self-end">
+      {/* Theme/Profile */}
+      <div className="fixed end-8 z-50 flex place-items-center gap-4 justify-self-end">
+        <ThemeToggle />
         <ProfileNav />
       </div>
     </div>

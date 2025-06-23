@@ -37,9 +37,10 @@ export default function ProfileNav() {
 
   return (
     <div className="relative z-50">
+      {/* Icon */}
       <button
         onClick={() => setOpen(true)}
-        className="stroke-foreground p-0 ring-primary rounded-full fill-none align-middle transition-all duration-150 hover:ring-4"
+        className="stroke-foreground p-0 ring-ring rounded-full fill-none align-middle transition-all duration-150 hover:ring-4"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -55,6 +56,7 @@ export default function ProfileNav() {
           <path d="M18 20a6 6 0 0 0-12 0"></path>
         </svg>
       </button>
+      {/* Menu */}
       <Menu open={open} closeFn={() => setOpen(false)}>
         <div>{session.user?.name}</div>
         <MenuItem

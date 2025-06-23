@@ -3,8 +3,6 @@
 import { prisma } from "@/app/prisma";
 import { auth } from "@/lib/auth";
 import EditTeamFormPage from "./EditTeamForm";
-import { Suspense } from "react";
-import PokeTeamSkeleton from "@/components/Teams/PokeTeamSkeleton";
 
 export default async function EditTeamPage({
   params,
@@ -33,10 +31,8 @@ export default async function EditTeamPage({
   }
 
   return (
-    <div className="flex w-full xl:w-2/3 2xl:w-1/2 justify-self-center place-content-center p-4">
-      <Suspense fallback={<PokeTeamSkeleton />}>
+    <div className="flex w-11/12 max-w-4xl justify-self-center place-content-center p-4">
         <EditTeamFormPage team={team} />
-      </Suspense>
     </div>
   );
 }

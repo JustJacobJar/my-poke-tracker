@@ -2,7 +2,7 @@
 
 import { startTransition, useActionState, useEffect, useState } from "react";
 import Modal from "./Modal";
-import { useFormStatus } from "react-dom";
+// import { useFormStatus } from "react-dom";
 import { DeleteTeam, DeleteTeamNoRedirect } from "@/app/server/submitActions";
 import { FormState } from "@/lib/types";
 
@@ -13,7 +13,7 @@ export default function DeleteButtonModal({
   teamId: string;
   redirect?: boolean;
 }) {
-  const { pending } = useFormStatus();
+  // const { pending } = useFormStatus();
   const [open, setOpen] = useState(false); //modal open close
   const [deleteFormState, deleteFormAction, isPending] = useActionState(
     redirect ? DeleteTeam : DeleteTeamNoRedirect,
@@ -31,8 +31,9 @@ export default function DeleteButtonModal({
   return (
     <>
       <button
+        type="button"
         onClick={() => setOpen(true)}
-        className="bg-destructive stroke-foreground hover:stroke-card aspect-square place-self-center p-2"
+        className="bg-destructive stroke-destructive-foreground aspect-square place-self-center p-2"
       >
         {" "}
         <svg
@@ -67,14 +68,14 @@ export default function DeleteButtonModal({
             {" "}
             <button
               disabled={isPending}
-              className="rounded-lg bg-neutral-300 hover:brightness-110"
+              className="bg-background hover:bg-secondary text-secondary-foreground border"
               onClick={() => setOpen(false)}
             >
               Cancel
             </button>
             <button
               disabled={isPending}
-              className="bg-destructive rounded-lg text-white hover:brightness-110"
+              className="bg-destructive text-destructive-foreground"
               onClick={onDelete}
             >
               Confirm

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import DisableBodyScroll from "./DisableBodyScroll";
+// import DisableBodyScroll from "./DisableBodyScroll";
 
 export default function Modal({
   open,

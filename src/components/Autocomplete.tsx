@@ -125,6 +125,7 @@ export default function Autocomplete({
       <input
         id="autocomplete"
         name={slotName}
+        autoComplete="off"
         className="bg-card text-foreground flex h-fit w-full shrink-0 rounded-lg py-2 text-center text-xl"
         onChange={handleChange}
         onKeyDown={onKeyDown}
