@@ -32,7 +32,7 @@ export default async function PokeTeamStandard({
       return (
         <Link
           href={`/dashboard/collections/edit/${pokeTeam.id}`}
-          className="bg-secondary stroke-secondary-foreground aspect-square place-self-center rounded-md p-2 transition-all duration-150 hover:inset-ring-1 hover:brightness-90"
+          className="bg-secondary stroke-secondary-foreground aspect-square place-self-center rounded-md p-2 transition-normal duration-150 hover:inset-ring-1 hover:brightness-90"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

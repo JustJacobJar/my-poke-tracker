@@ -40,23 +40,23 @@
   --font-serif: Libre Baskerville, serif;
   --font-mono: Fira Code, monospace;
   --radius: 0.75rem;
-  --shadow-2xs: 3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.3);
-  --shadow-xs: 3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.3);
+  --shadow-2xs: 3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.13);
+  --shadow-xs: 3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.13);
   --shadow-sm:
-    3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.5),
-    3px 1px 2px -1.5px hsl(0 0% 32.9412% / 0.5);
+    3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.25),
+    3px 1px 2px -1.5px hsl(0 0% 32.9412% / 0.25);
   --shadow:
-    3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.5),
-    3px 1px 2px -1.5px hsl(0 0% 32.9412% / 0.5);
+    3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.25),
+    3px 1px 2px -1.5px hsl(0 0% 32.9412% / 0.25);
   --shadow-md:
-    3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.5),
-    3px 2px 4px -1.5px hsl(0 0% 32.9412% / 0.5);
+    3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.25),
+    3px 2px 4px -1.5px hsl(0 0% 32.9412% / 0.25);
   --shadow-lg:
-    3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.5),
-    3px 4px 6px -1.5px hsl(0 0% 32.9412% / 0.5);
+    3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.25),
+    3px 4px 6px -1.5px hsl(0 0% 32.9412% / 0.25);
   --shadow-xl:
-    3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.5),
-    3px 8px 10px -1.5px hsl(0 0% 32.9412% / 0.5);
+    3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.25),
+    3px 8px 10px -1.5px hsl(0 0% 32.9412% / 0.25);
   --shadow-2xl: 3px 4.5px 4.5px -0.5px hsl(0 0% 32.9412% / 0.63);
   --spacing: 0.21rem;
 }
@@ -98,23 +98,23 @@
   --font-serif: Libre Baskerville, serif;
   --font-mono: Fira Code, monospace;
   --radius: 0.75rem;
-  --shadow-2xs: 3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.5);
-  --shadow-xs: 3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.5);
+  --shadow-2xs: 3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.13);
+  --shadow-xs: 3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.13);
   --shadow-sm:
-    3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.5),
-    3px 1px 2px -1.5px hsl(0 0% 10.1961% / 0.5);
+    3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.25),
+    3px 1px 2px -1.5px hsl(0 0% 10.1961% / 0.25);
   --shadow:
-    3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.5),
-    3px 1px 2px -1.5px hsl(0 0% 10.1961% / 0.5);
+    3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.25),
+    3px 1px 2px -1.5px hsl(0 0% 10.1961% / 0.25);
   --shadow-md:
-    3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.5),
-    3px 2px 4px -1.5px hsl(0 0% 10.1961% / 0.5);
+    3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.25),
+    3px 2px 4px -1.5px hsl(0 0% 10.1961% / 0.25);
   --shadow-lg:
-    3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.5),
-    3px 4px 6px -1.5px hsl(0 0% 10.1961% / 0.5);
+    3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.25),
+    3px 4px 6px -1.5px hsl(0 0% 10.1961% / 0.25);
   --shadow-xl:
-    3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.5),
-    3px 8px 10px -1.5px hsl(0 0% 10.1961% / 0.5);
+    3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.25),
+    3px 8px 10px -1.5px hsl(0 0% 10.1961% / 0.25);
   --shadow-2xl: 3px 4.5px 4.5px -0.5px hsl(0 0% 10.1961% / 0.63);
 }
 
@@ -181,7 +181,7 @@
   }
 
   button {
-    @apply rounded-md p-2 px-4 transition-all duration-150 hover:inset-ring-1 hover:brightness-90 disabled:brightness-50;
+    @apply rounded-md p-2 px-4 transition-all duration-150 hover:inset-ring-1 hover:brightness-75 disabled:brightness-50;
   }
 
   * {
