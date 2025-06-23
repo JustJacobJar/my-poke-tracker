@@ -11,11 +11,12 @@ export default async function CollectionPage() {
     where: { authorId: session?.user?.id },
   }); //pagenate this
 
-  return (
-    <div className="flex w-full flex-col place-items-center place-self-center">
-      <h1 className="py-8 text-4xl font-bold">Your Teams</h1>
+  const teams = () => {
+    if (myCollections.length == 0) {
+      return <div>You have no teams yet...</div>;
+    }
+    return (
       <Feed>
-        {/* <div className="grid w-full grid-cols-1 flex-wrap place-items-center gap-4 place-self-center p-4 xl:grid-cols-3 2xl:w-4/5"> */}
         {myCollections.map((data, index) => {
           return (
             <div
@@ -26,8 +27,14 @@ export default async function CollectionPage() {
             </div>
           );
         })}
-        {/* </div> */}
       </Feed>
+    );
+  };
+
+  return (
+    <div className="flex w-full flex-col place-items-center place-self-center">
+      <h1 className="py-8 text-4xl font-bold">Your Teams</h1>
+      {teams()}
     </div>
   );
 }
