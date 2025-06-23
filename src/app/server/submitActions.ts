@@ -45,7 +45,7 @@ export async function CreateTeam(initialState: any, teamData: IPokeTeam) {
   }
 
   //Success, redirect user to the created team
-  revalidatePath("/team");
+  revalidatePath("/dashboard");
   redirect(`/dashboard/team/${teamId}`);
 }
 
@@ -106,7 +106,7 @@ export async function EditTeam(initialState: any, teamData: IPokeTeam) {
   }
 
   //Succesfully edited, redirect user to team
-  revalidatePath("/team");
+  revalidatePath("/dashboard");
   redirect(`/dashboard/team/${validated.data.id}`);
 }
 
@@ -150,7 +150,7 @@ export async function DeleteTeam(
   }
 
   //Successfully deleted
-  revalidatePath("/dashboard/collections");
+  revalidatePath("/dashboard");
   if (redir) redirect("/dashboard/collections/");
   return {
     message: `Successfully deleted team:${teamId}`,
