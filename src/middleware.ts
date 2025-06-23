@@ -17,5 +17,5 @@ export default auth(async (request: NextRequest) => {
 //Matcher exampels at https://nextjs.org/docs/pages/building-your-application/routing/middleware#matcher
 //Paths to run middleware on, ig protects these paths
 export const config = {
-  matcher: "/dashboard/(.*)",
+  matcher: ["/dashboard/collections/(.*)", "/dashboard/collections"],
 };
