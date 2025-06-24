@@ -24,7 +24,7 @@ export function Menu({
   return (
     <ChildrenBlur
       ref={menu}
-      className="bg-popover border absolute right-0 h-fit w-64 origin-top-right overflow-clip p-1 rounded-lg shadow-sm"
+      className="bg-popover absolute right-0 h-fit w-64 origin-top-right overflow-clip rounded-lg border p-1 shadow-sm"
       onBlur={() => closeFn()}
     >
       {children}

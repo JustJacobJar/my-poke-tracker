@@ -1,13 +1,11 @@
 "use client";
 
 import PokeCardInput from "@/components/Cards/PokeCardInput";
-import { FormEvent, startTransition, useActionState, useState } from "react";
+import { FormEvent, startTransition, useActionState } from "react";
 import { PokemonTeam } from "../../../../../../generated/prisma";
-import Modal from "@/components/Modal";
-import { DeleteTeam, EditTeam } from "@/app/server/submitActions";
+import { EditTeam } from "@/app/server/submitActions";
 import { FormState } from "@/lib/types";
 import SubmitButton from "@/components/SubmitButton";
-import { useFormStatus } from "react-dom";
 import DeleteButtonModal from "@/components/DeleteButtonModal";
 
 export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
@@ -15,12 +13,6 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
     EditTeam,
     {} as FormState,
   );
-  const [deleteFormState, deleteFormAction] = useActionState(
-    DeleteTeam,
-    {} as FormState,
-  );
-  const { pending } = useFormStatus();
-  const [open, setOpen] = useState(false); //modal open close
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     //Validation
@@ -45,10 +37,6 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
     };
 
     startTransition(() => editFormAction(rawFormData));
-  }
-
-  async function onDelete() {
-    startTransition(() => deleteFormAction(team.id));
   }
 
   return (
@@ -100,9 +88,7 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
         />
         {/* Buttons */}
         <div className="flex w-full flex-row place-content-end gap-4 p-2">
-          <p aria-live="polite">
-            {deleteFormState.message && editFormState.message}
-          </p>
+          <p aria-live="polite">{editFormState.message}</p>
 
           <DeleteButtonModal teamId={team.id} redirect={true} />
           <SubmitButton
@@ -111,30 +97,6 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
           />
         </div>
       </form>
-      {/* <Modal
-        open={open}
-        cancelFn={() => setOpen(false)}
-        titleContent={<h1>Delete Team?</h1>}
-        content={<p>Are you sure you want to delete this team?</p>}
-        buttons={
-          <>
-            {" "}
-            <button
-              className="rounded-lg bg-neutral-300 hover:brightness-110"
-              onClick={() => setOpen(false)}
-            >
-              Cancel
-            </button>
-            <button
-              disabled={pending}
-              className="bg-destructive text-destructive-foreground rounded-lg hover:brightness-110"
-              onClick={onDelete}
-            >
-              Confirm
-            </button>
-          </>
-        }
-      /> */}
     </>
   );
 }

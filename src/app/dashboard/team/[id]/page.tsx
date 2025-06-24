@@ -1,21 +1,12 @@
-"use server";
+"use client";
 
 import PokeTeamStandard from "@/components/Teams/PokeTeamStandard";
-import prisma from "@/lib/prisma";
+import { useTeamQuery } from "@/lib/queries";
+import { useParams } from "next/navigation";
 
-export default async function TeamView({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-
-  //Team to display
-  const team = await prisma.pokemonTeam.findUnique({
-    where: {
-      id: id,
-    },
-  });
+export default function TeamView() {
+  const params = useParams<{ id: string }>();
+  const [team] = useTeamQuery(params.id);
 
   if (team == null) {
     return (
@@ -26,7 +17,7 @@ export default async function TeamView({
   }
 
   return (
-    <div className="flex w-11/12 max-w-4xl p-4 justify-self-center place-content-center">
+    <div className="flex w-11/12 max-w-4xl place-content-center justify-self-center p-4">
       <PokeTeamStandard pokeTeam={team} extended={true} />
     </div>
   );

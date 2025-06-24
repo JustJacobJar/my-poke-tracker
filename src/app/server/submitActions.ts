@@ -5,7 +5,6 @@ import { prisma } from "@/app/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { FormState, IPokeTeam } from "@/lib/types";
-import { tr } from "zod/v4/locales";
 
 export async function CreateTeam(initialState: any, teamData: IPokeTeam) {
   //Auth the user
