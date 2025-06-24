@@ -3,7 +3,7 @@ export interface IPokeTeam {
   name: string;
   pokemon: Array<string>;
   description: string | null;
-  authorId?: string;
+  authorId: string;
 }
 
 export type FormState = {

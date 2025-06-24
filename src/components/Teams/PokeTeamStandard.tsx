@@ -77,7 +77,7 @@ export default function PokeTeamStandard({
                 {pokeTeam.name ? pokeTeam.name : "No team name"}
               </h1>
             </a>
-            <h2>Created by: {author?.name ? author.name : "Not Found"}</h2>
+            <h2>Created by: {author ? author : "Not Found"}</h2>
           </div>
           <div className="flex flex-row gap-4">
             {deleteButton()}

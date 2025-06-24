@@ -1,6 +1,18 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import prisma from "@/lib/prisma";
+"use client";
+import {
+  keepPreviousData,
+  useInfiniteQuery,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+
 import { IPokeCardInfo, IPokeTeam } from "./types";
+import {
+  fetchAuthorName,
+  fetchPokeTeam,
+  fetchTeamPage,
+} from "@/app/server/fetchActions";
+import { pages } from "next/dist/build/templates/app-page";
 
 export function usePokeQuery(name: string) {
   const baseApiUrl = "https://pokeapi.co/api/v2/pokemon-form/";
@@ -22,14 +34,7 @@ export function usePokeQuery(name: string) {
 export function useTeamQuery(id: string) {
   const query = useSuspenseQuery({
     queryKey: ["team", id],
-    queryFn: async () => {
-      const team = await prisma.pokemonTeam.findUnique({
-        where: {
-          id: id,
-        },
-      });
-      return team;
-    },
+    queryFn: async () => await fetchPokeTeam(id),
   });
   return [query.data, query] as const;
 }
@@ -37,12 +42,37 @@ export function useTeamQuery(id: string) {
 export function useAuthorQuery(teamId: IPokeTeam) {
   const query = useSuspenseQuery({
     queryKey: ["authorName", teamId.authorId],
-    queryFn: async () => {
-      const author = await prisma.user.findUnique({
-        where: { id: teamId.authorId },
-      });
-      return author;
-    },
+    queryFn: async () => await fetchAuthorName(teamId.authorId),
   });
   return [query.data, query] as const;
+}
+
+export function useTeamsQuery() {
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: ["teams"],
+    queryFn: fetchTeamPage,
+    initialPageParam: 1,
+    // maxPages: 10,
+    getNextPageParam: (lastPage, pages) => {
+      if (!lastPage.hasMore) return undefined;
+      return lastPage.nextPage;
+    },
+  });
+  return [
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  ] as const;
 }

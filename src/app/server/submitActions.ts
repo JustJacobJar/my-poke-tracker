@@ -33,6 +33,7 @@ export async function CreateTeam(initialState: any, teamData: IPokeTeam) {
         authorId: session.user.id,
         description: validated.data.description,
         name: validated.data.name,
+        updatedAt: new Date(),
       },
     });
     teamId = team.id;
@@ -94,6 +95,7 @@ export async function EditTeam(initialState: any, teamData: IPokeTeam) {
         name: validated.data.name,
         pokemon: validated.data.pokemon,
         description: validated.data.description,
+        updatedAt: new Date(),
       },
     });
   } catch (error) {
