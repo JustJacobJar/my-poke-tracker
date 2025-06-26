@@ -1,10 +1,9 @@
 "use client";
 
-import { startTransition, useActionState, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal";
-// import { useFormStatus } from "react-dom";
-import { DeleteTeam, DeleteTeamNoRedirect } from "@/app/server/submitActions";
-import { FormState } from "@/lib/types";
+import { LoadingSpinner } from "./LoadingSpinner";
+import { useDeleteTeamMutate } from "@/lib/queries";
 
 export default function DeleteButtonModal({
   teamId,
@@ -13,20 +12,16 @@ export default function DeleteButtonModal({
   teamId: string;
   redirect?: boolean;
 }) {
-  // const { pending } = useFormStatus();
   const [open, setOpen] = useState(false); //modal open close
-  const [deleteFormState, deleteFormAction, isPending] = useActionState(
-    redirect ? DeleteTeam : DeleteTeamNoRedirect,
-    {} as FormState,
-  );
+  const [mutation] = useDeleteTeamMutate();
 
   async function onDelete() {
-    startTransition(() => deleteFormAction(teamId));
+    mutation.mutate({ teamId: teamId, redir: redirect });
   }
 
   useEffect(() => {
-    if (deleteFormState.success) setOpen(false);
-  }, [deleteFormState]);
+    if (mutation.isSuccess) setOpen(false);
+  }, [mutation.isSuccess]);
 
   return (
     <>
@@ -55,11 +50,11 @@ export default function DeleteButtonModal({
       </button>
       <Modal
         open={open}
-        cancelFn={() => setOpen(isPending)}
+        cancelFn={() => setOpen(mutation.isPending)}
         titleContent={<h1>Delete Team?</h1>}
         content={
           <>
-            {isPending && <LoadingSpinner />}
+            {mutation.isPending && <LoadingSpinner />}
             <p>Are you sure you want to delete this team?</p>
           </>
         }
@@ -67,14 +62,14 @@ export default function DeleteButtonModal({
           <>
             {" "}
             <button
-              disabled={isPending}
+              disabled={mutation.isPending}
               className="bg-background hover:bg-secondary text-secondary-foreground border"
               onClick={() => setOpen(false)}
             >
               Cancel
             </button>
             <button
-              disabled={isPending}
+              disabled={mutation.isPending}
               className="bg-destructive text-destructive-foreground"
               onClick={onDelete}
             >
@@ -84,25 +79,5 @@ export default function DeleteButtonModal({
         }
       />
     </>
-  );
-}
-
-function LoadingSpinner() {
-  return (
-    <div className="fixed top-0 right-0 bottom-0 left-0 z-50 flex place-content-center place-items-center bg-black/20">
-      <svg
-        className="stroke-border size-24 animate-spin"
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
-      </svg>
-    </div>
   );
 }

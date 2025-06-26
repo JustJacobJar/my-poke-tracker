@@ -1,8 +1,8 @@
 "use client";
 import {
-  keepPreviousData,
   useInfiniteQuery,
-  useQuery,
+  useMutation,
+  useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
 
@@ -11,14 +11,16 @@ import {
   fetchAuthorName,
   fetchPokeTeam,
   fetchTeamPage,
+  fetchTeamPageByAuthor,
 } from "@/app/server/fetchActions";
-import { pages } from "next/dist/build/templates/app-page";
+import { CreateTeam, DeleteTeam, EditTeam } from "@/app/server/submitActions";
+import { useRouter } from "next/navigation";
 
 export function usePokeQuery(name: string) {
   const baseApiUrl = "https://pokeapi.co/api/v2/pokemon-form/";
   const query = useSuspenseQuery({
     queryKey: ["pokeCard", name],
-    staleTime: Infinity,
+    staleTime: "static",
     queryFn: async () => {
       const path = name.toLowerCase();
       const url = baseApiUrl + path;
@@ -60,8 +62,8 @@ export function useTeamsQuery() {
     queryKey: ["teams"],
     queryFn: fetchTeamPage,
     initialPageParam: 1,
-    // maxPages: 10,
-    getNextPageParam: (lastPage, pages) => {
+    // maxPages: 1,
+    getNextPageParam: (lastPage) => {
       if (!lastPage.hasMore) return undefined;
       return lastPage.nextPage;
     },
@@ -75,4 +77,95 @@ export function useTeamsQuery() {
     isFetchingNextPage,
     status,
   ] as const;
+}
+
+export function useTeamsByAuthorQuery(id: string) {
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: ["teams", id],
+    meta: { id },
+    queryFn: ({ pageParam, meta }) =>
+      fetchTeamPageByAuthor({ pageParam, meta }),
+    initialPageParam: 1,
+    // maxPages: 10,
+    getNextPageParam: (lastPage) => {
+      if (!lastPage.hasMore) return undefined;
+      return lastPage.nextPage;
+    },
+  });
+  return [
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  ] as const;
+}
+
+export function useCreateTeamMutate() {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async (formData: IPokeTeam) => {
+      return await CreateTeam(formData);
+    },
+    onSuccess(data) {
+      queryClient.invalidateQueries({ queryKey: ["teams"] });
+      router.push(`/dashboard/team/${data.id}`);
+    },
+  });
+  return [mutation] as const;
+}
+
+export function useEditTeamMutate() {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async (formData: IPokeTeam) => {
+      return await EditTeam(formData);
+    },
+    onSuccess(data, variables) {
+      queryClient.invalidateQueries({ queryKey: ["team", variables.id] });
+      // queryClient.refetchQueries({ queryKey: ["team", variables.id] });
+      queryClient.invalidateQueries({ queryKey: ["teams"] });
+      router.push(`/dashboard/team/${data.id}`);
+    },
+  });
+  return [mutation] as const;
+}
+
+export function useDeleteTeamMutate() {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async ({
+      teamId,
+      redir = true,
+    }: {
+      teamId: string;
+      redir: boolean;
+    }) => {
+      return await DeleteTeam(teamId, redir);
+    },
+    onSuccess(data) {
+      queryClient.invalidateQueries({ queryKey: ["team", data.teamId] });
+      queryClient.invalidateQueries({ queryKey: ["teams"] });
+      if (data.redir) {
+        router.push(`/dashboard/collections/`);
+      }
+    },
+  });
+  return [mutation] as const;
 }

@@ -2,29 +2,17 @@
 import { z } from "zod/v4";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/app/prisma";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { FormState, IPokeTeam } from "@/lib/types";
+import { IPokeTeam } from "@/lib/types";
 
-export async function CreateTeam(initialState: any, teamData: IPokeTeam) {
+export async function CreateTeam(teamData: IPokeTeam) {
   //Auth the user
   const session = await auth();
-  if (!session?.user?.id)
-    return {
-      message: "Error getting user data",
-      success: false,
-    } as FormState;
+  if (!session?.user?.id) throw "Error getting user data";
 
   //Capture and validate data
   const validated = await IPokeTeamZ.safeParseAsync(teamData);
-  if (!validated.success) {
-    return {
-      message: validated.error.message,
-      success: false,
-    } as FormState;
-  }
+  if (!validated.success) throw validated.error.message;
 
-  let teamId = "";
   //Upload to database
   try {
     const team = await prisma.pokemonTeam.create({
@@ -36,36 +24,21 @@ export async function CreateTeam(initialState: any, teamData: IPokeTeam) {
         updatedAt: new Date(),
       },
     });
-    teamId = team.id;
+    // revalidatePath("/dashboard");
+    return team;
   } catch (error) {
-    return {
-      message: "There was an error saving to the database: " + error,
-      success: false,
-    } as FormState;
+    throw "There was an error saving to the database: " + error;
   }
-
-  //Success, redirect user to the created team
-  revalidatePath("/dashboard");
-  redirect(`/dashboard/team/${teamId}`);
 }
 
-export async function EditTeam(initialState: any, teamData: IPokeTeam) {
+export async function EditTeam(teamData: IPokeTeam) {
   //Auth user
   const session = await auth();
-  if (!session?.user?.id)
-    return {
-      message: "401: Unauthorised, please sign in",
-      success: false,
-    } as FormState;
+  if (!session?.user?.id) throw "401: Unauthorised, please sign in";
 
   //Capture and vaidate data
   const validated = await IPokeTeamZ.safeParseAsync(teamData);
-  if (!validated.success) {
-    return {
-      message: validated.error.message,
-      success: false,
-    } as FormState;
-  }
+  if (!validated.success) throw validated.error.message;
 
   //check the posts author id and validate this session matches
   const team = await prisma.pokemonTeam.findUnique({
@@ -73,23 +46,15 @@ export async function EditTeam(initialState: any, teamData: IPokeTeam) {
   });
 
   //Entry does not exist
-  if (!team)
-    return {
-      message: "Team not found! " + validated.data.id,
-      success: false,
-    } as FormState;
+  if (!team) throw "Team not found! " + validated.data.id;
 
   //User is not the owner of the team, cant edit
   if (team.authorId !== session.user.id)
-    return {
-      message:
-        "401: Unauthorised, you do not own this team. " + validated.data.id,
-      success: false,
-    } as FormState;
+    throw "401: Unauthorised, you do not own this team. " + validated.data.id;
 
   //Edit the team
   try {
-    await prisma.pokemonTeam.update({
+    const updatedTeam = await prisma.pokemonTeam.update({
       where: { id: validated.data.id },
       data: {
         name: validated.data.name,
@@ -98,31 +63,18 @@ export async function EditTeam(initialState: any, teamData: IPokeTeam) {
         updatedAt: new Date(),
       },
     });
+    // revalidatePath(`/team/${team.id}`);
+    return updatedTeam;
   } catch (error) {
     console.log("Db error: " + error);
-    return {
-      message: "There was an error updating the database, try again later.",
-      success: false,
-    } as FormState;
+    throw "There was an error updating the database, try again later.";
   }
-
-  //Succesfully edited, redirect user to team
-  revalidatePath("/dashboard");
-  redirect(`/dashboard/team/${validated.data.id}`);
 }
 
-export async function DeleteTeam(
-  initialState: any,
-  teamId: string,
-  redir = true,
-) {
+export async function DeleteTeam(teamId: string, redir: boolean) {
   //Auth user
   const session = await auth();
-  if (!session?.user?.id)
-    return {
-      message: "401: Unauthorised, please sign in",
-      success: false,
-    } as FormState;
+  if (!session?.user?.id) throw "401: Unauthorised, please sign in";
 
   //Find the team
   const team = await prisma.pokemonTeam.findUnique({
@@ -130,37 +82,23 @@ export async function DeleteTeam(
   });
 
   //Team not found
-  if (!team)
-    return {
-      message: "404: Team not found!",
-      success: false,
-    } as FormState;
+  if (!team) throw "404: Team not found!";
 
   //Check the user owns the team -> delete
-  if (team.authorId === session.user.id) {
-    try {
-      await prisma.pokemonTeam.delete({ where: { id: teamId } });
-    } catch (error) {
-      console.log("Db error: " + error);
-      return {
-        message:
-          "There was an error deleting from the database, try again later.",
-        success: false,
-      } as FormState;
+  if (team.authorId !== session.user.id)
+    throw "401: Unauthorised, you are not the team owner";
+
+  try {
+    await prisma.pokemonTeam.delete({ where: { id: teamId } });
+    if (redir) {
+      return { redir: true, teamId: teamId };
+    } else {
+      return { redir: false, teamId: teamId };
     }
+  } catch (error) {
+    console.log("Db error: " + error);
+    throw "There was an error deleting from the database, try again later.";
   }
-
-  //Successfully deleted
-  revalidatePath("/dashboard");
-  if (redir) redirect("/dashboard/collections/");
-  return {
-    message: `Successfully deleted team:${teamId}`,
-    success: true,
-  } as FormState;
-}
-
-export async function DeleteTeamNoRedirect(initialState: any, teamId: string) {
-  return DeleteTeam(initialState, teamId, false);
 }
 
 const IPokeTeamZ = z.object({

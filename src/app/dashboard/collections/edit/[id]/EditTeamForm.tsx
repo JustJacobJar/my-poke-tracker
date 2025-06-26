@@ -1,18 +1,16 @@
 "use client";
 
 import PokeCardInput from "@/components/Cards/PokeCardInput";
-import { FormEvent, startTransition, useActionState } from "react";
+import { FormEvent } from "react";
 import { PokemonTeam } from "../../../../../../generated/prisma";
-import { EditTeam } from "@/app/server/submitActions";
-import { FormState } from "@/lib/types";
+import { IPokeTeam } from "@/lib/types";
 import SubmitButton from "@/components/SubmitButton";
 import DeleteButtonModal from "@/components/DeleteButtonModal";
+import { useEditTeamMutate } from "@/lib/queries";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
-  const [editFormState, editFormAction] = useActionState(
-    EditTeam,
-    {} as FormState,
-  );
+  const [mutation] = useEditTeamMutate();
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     //Validation
@@ -22,7 +20,7 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
 
     //Format data
     const formData = new FormData(event.currentTarget);
-    const rawFormData = {
+    const rawFormData: IPokeTeam = {
       id: team.id,
       name: formData.get("name") as string,
       pokemon: [
@@ -34,9 +32,9 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
         formData.get("slot5") as string,
       ],
       description: formData.get("description") as string,
+      authorId: "",
     };
-
-    startTransition(() => editFormAction(rawFormData));
+    mutation.mutate(rawFormData);
   }
 
   return (
@@ -88,8 +86,6 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
         />
         {/* Buttons */}
         <div className="flex w-full flex-row place-content-end gap-4 p-2">
-          <p aria-live="polite">{editFormState.message}</p>
-
           <DeleteButtonModal teamId={team.id} redirect={true} />
           <SubmitButton
             className="bg-primary text-primary-foreground"
@@ -97,6 +93,8 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
           />
         </div>
       </form>
+      {/* Loading Spinner */}
+      {mutation.isPending && <LoadingSpinner />}
     </>
   );
 }

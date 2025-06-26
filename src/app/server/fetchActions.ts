@@ -2,15 +2,38 @@
 
 import { prisma } from "../prisma";
 
+const COUNT = 9;
+
 export const fetchTeamPage = async ({ pageParam }: { pageParam: number }) => {
-  const count = 3;
   const teams = await prisma.pokemonTeam.findMany({
     orderBy: { createdAt: "desc" },
-    skip: Math.max(pageParam - 1, 0) * count,
-    take: count,
+    skip: Math.max(pageParam - 1, 0) * COUNT,
+    take: COUNT,
   });
 
-  if (teams.length < count) {
+  if (teams.length < COUNT) {
+    return { data: teams, nextPage: pageParam + 1, hasMore: false };
+  }
+  return { data: teams, nextPage: pageParam + 1, hasMore: true };
+};
+
+export const fetchTeamPageByAuthor = async ({
+  pageParam,
+  meta,
+}: {
+  pageParam: number;
+  meta: Record<string, unknown> | undefined;
+}) => {
+  if (!meta) throw "No author Id";
+
+  const teams = await prisma.pokemonTeam.findMany({
+    where: { authorId: meta.id as string },
+    orderBy: { createdAt: "asc" },
+    skip: Math.max(pageParam - 1, 0) * COUNT,
+    take: COUNT,
+  });
+
+  if (teams.length < COUNT) {
     return { data: teams, nextPage: pageParam + 1, hasMore: false };
   }
   return { data: teams, nextPage: pageParam + 1, hasMore: true };

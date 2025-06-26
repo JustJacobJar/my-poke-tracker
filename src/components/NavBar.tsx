@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { JSX } from "react";
+"use client";
 import ProfileNav from "./ProfileNav";
 import ThemeToggle from "./ThemeToggle";
+import { NavLink } from "./NavLink";
 
 export default function NavBar() {
   return (
@@ -53,7 +53,10 @@ export default function NavBar() {
             </svg>
           }
         />
-        <NavLink link="/dashboard/collections" content={<p>Collections</p>} />
+        <NavLink
+          link={`/dashboard/collections/`}
+          content={<p>Collections</p>}
+        />
       </nav>
       {/* Theme/Profile */}
       <div className="fixed end-8 z-50 flex place-items-center gap-4 justify-self-end">
@@ -61,21 +64,5 @@ export default function NavBar() {
         <ProfileNav />
       </div>
     </div>
-  );
-}
-
-export function NavLink({
-  content,
-  link,
-  classname,
-}: {
-  content: JSX.Element;
-  link: string;
-  classname?: string;
-}) {
-  return (
-    <Link className={classname} href={link}>
-      {content}
-    </Link>
   );
 }
