@@ -1,21 +1,15 @@
-"use server";
+"use client";
 
+import PokeTeamSkeleton from "@/components/Teams/PokeTeamSkeleton";
 import PokeTeamStandard from "@/components/Teams/PokeTeamStandard";
-import prisma from "@/lib/prisma";
+import { useTeamQuery } from "@/lib/queries";
+import { useParams } from "next/navigation";
 
-export default async function TeamView({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
+export default function TeamView() {
+  const params = useParams<{ id: string }>();
+  const [team, query] = useTeamQuery(params.id);
 
-  //Team to display
-  const team = await prisma.pokemonTeam.findUnique({
-    where: {
-      id: id,
-    },
-  });
+  console.log(query);
 
   if (team == null) {
     return (
@@ -26,8 +20,14 @@ export default async function TeamView({
   }
 
   return (
-    <div className="flex w-11/12 max-w-4xl p-4 justify-self-center place-content-center">
-      <PokeTeamStandard pokeTeam={team} extended={true} />
+    <div className="flex w-11/12 max-w-4xl place-content-center justify-self-center p-4">
+      {query.isFetching ? (
+        <div className="flex w-full flex-col gap-4 pt-2">
+          <PokeTeamSkeleton />
+        </div>
+      ) : (
+        <PokeTeamStandard pokeTeam={team} extended={true} />
+      )}
     </div>
   );
 }

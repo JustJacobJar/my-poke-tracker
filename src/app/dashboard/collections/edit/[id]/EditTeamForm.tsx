@@ -1,26 +1,16 @@
 "use client";
 
 import PokeCardInput from "@/components/Cards/PokeCardInput";
-import { FormEvent, startTransition, useActionState, useState } from "react";
+import { FormEvent } from "react";
 import { PokemonTeam } from "../../../../../../generated/prisma";
-import Modal from "@/components/Modal";
-import { DeleteTeam, EditTeam } from "@/app/server/submitActions";
-import { FormState } from "@/lib/types";
+import { IPokeTeam } from "@/lib/types";
 import SubmitButton from "@/components/SubmitButton";
-import { useFormStatus } from "react-dom";
 import DeleteButtonModal from "@/components/DeleteButtonModal";
+import { useEditTeamMutate } from "@/lib/queries";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
-  const [editFormState, editFormAction] = useActionState(
-    EditTeam,
-    {} as FormState,
-  );
-  const [deleteFormState, deleteFormAction] = useActionState(
-    DeleteTeam,
-    {} as FormState,
-  );
-  const { pending } = useFormStatus();
-  const [open, setOpen] = useState(false); //modal open close
+  const [mutation] = useEditTeamMutate();
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     //Validation
@@ -30,7 +20,7 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
 
     //Format data
     const formData = new FormData(event.currentTarget);
-    const rawFormData = {
+    const rawFormData: IPokeTeam = {
       id: team.id,
       name: formData.get("name") as string,
       pokemon: [
@@ -42,13 +32,9 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
         formData.get("slot5") as string,
       ],
       description: formData.get("description") as string,
+      authorId: "",
     };
-
-    startTransition(() => editFormAction(rawFormData));
-  }
-
-  async function onDelete() {
-    startTransition(() => deleteFormAction(team.id));
+    mutation.mutate(rawFormData);
   }
 
   return (
@@ -100,10 +86,6 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
         />
         {/* Buttons */}
         <div className="flex w-full flex-row place-content-end gap-4 p-2">
-          <p aria-live="polite">
-            {deleteFormState.message && editFormState.message}
-          </p>
-
           <DeleteButtonModal teamId={team.id} redirect={true} />
           <SubmitButton
             className="bg-primary text-primary-foreground"
@@ -111,30 +93,8 @@ export default function EditTeamFormPage({ team }: { team: PokemonTeam }) {
           />
         </div>
       </form>
-      {/* <Modal
-        open={open}
-        cancelFn={() => setOpen(false)}
-        titleContent={<h1>Delete Team?</h1>}
-        content={<p>Are you sure you want to delete this team?</p>}
-        buttons={
-          <>
-            {" "}
-            <button
-              className="rounded-lg bg-neutral-300 hover:brightness-110"
-              onClick={() => setOpen(false)}
-            >
-              Cancel
-            </button>
-            <button
-              disabled={pending}
-              className="bg-destructive text-destructive-foreground rounded-lg hover:brightness-110"
-              onClick={onDelete}
-            >
-              Confirm
-            </button>
-          </>
-        }
-      /> */}
+      {/* Loading Spinner */}
+      {mutation.isPending && <LoadingSpinner />}
     </>
   );
 }
