@@ -8,13 +8,11 @@ const SIGNIN_ERROR_URL = "/error";
 
 export async function SignInToProvider(
   providerId: string,
-  props: {
-    searchParams: { callbackUrl: string | undefined };
-  },
+  callbackUrl: string | undefined,
 ) {
   try {
     await signIn(providerId, {
-      redirectTo: props.searchParams?.callbackUrl ?? "",
+      redirectTo: callbackUrl ?? "",
     });
   } catch (error) {
     // Signin can fail for a number of reasons, such as the user

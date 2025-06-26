@@ -1,10 +1,12 @@
-"use client";
 import { providerMap } from "@/lib/auth.config";
-import { SignInToProvider } from "../server/signInActions";
+import { SignInToProvider } from "@/server/signInActions";
+import { Suspense } from "react";
 
-export default function SignInPage(props: {
-  searchParams: { callbackUrl: string | undefined };
+export default async function SignInPage(props: {
+  searchParams: Promise<{ callbackUrl: string | undefined }>;
 }) {
+  const callbackUrl = await props.searchParams;
+
   return (
     <div className="flex h-dvh w-full flex-col place-items-center pt-16">
       <div className="flex flex-col place-items-center gap-16 text-center">
@@ -29,18 +31,23 @@ export default function SignInPage(props: {
         </div>
       </div>
       {/* Buttons */}
-      <div className="my-16 flex flex-col place-items-center gap-4">
-        <h4 className="text-lg">Sign in using</h4>
-        {Object.values(providerMap).map((provider) => (
-          <form
-            className="w-fit"
-            key={provider.id}
-            action={async () => SignInToProvider(provider.id, props)}
-          >
-            <SigninButton provider={provider} />
-          </form>
-        ))}
-      </div>
+      <Suspense fallback={<p>Loading...</p>}>
+        <div className="my-16 flex flex-col place-items-center gap-4">
+          <h4 className="text-lg">Sign in using</h4>
+          {Object.values(providerMap).map((provider) => (
+            <form
+              className="w-fit"
+              key={provider.id}
+              action={async () => {
+                "use server";
+                await SignInToProvider(provider.id, callbackUrl.callbackUrl);
+              }}
+            >
+              <SigninButton provider={provider} />
+            </form>
+          ))}
+        </div>
+      </Suspense>
     </div>
   );
 }

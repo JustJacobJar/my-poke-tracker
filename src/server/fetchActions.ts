@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "../prisma";
+import { prisma } from "@/prisma";
 
 const COUNT = 9;
 

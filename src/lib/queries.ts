@@ -12,8 +12,8 @@ import {
   fetchPokeTeam,
   fetchTeamPage,
   fetchTeamPageByAuthor,
-} from "@/app/server/fetchActions";
-import { CreateTeam, DeleteTeam, EditTeam } from "@/app/server/submitActions";
+} from "@/server/fetchActions";
+import { CreateTeam, DeleteTeam, EditTeam } from "@/server/submitActions";
 import { useRouter } from "next/navigation";
 
 export function usePokeQuery(name: string) {
