@@ -17,6 +17,7 @@ const eslintConfig = [
     // "plugin:react/recommended",
   ),
   {
+    dirs: ["app", "lib", "components", "data", "server"],
     files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"],
     rules: {
       "no-unused-vars": "off",
