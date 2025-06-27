@@ -2,7 +2,7 @@
 
 import PokeCardInput from "@/components/Cards/PokeCardInput";
 import { FormEvent } from "react";
-import { PokemonTeam } from "../../../../../../generated/prisma";
+import { PokemonTeam } from "@/generated/client";
 import { IPokeTeam } from "@/lib/types";
 import SubmitButton from "@/components/SubmitButton";
 import DeleteButtonModal from "@/components/DeleteButtonModal";

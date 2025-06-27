@@ -1,6 +1,7 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
+import { globalIgnores } from "eslint/config";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,6 +25,7 @@ const eslintConfig = [
       "@typescript-eslint/no-explicit-any": "warn",
     },
   },
+  globalIgnores(["**/generated/"]),
 ];
 
 export default eslintConfig;
@@ -31,3 +33,5 @@ export default eslintConfig;
 //   "no-unused-vars": "off",
 //   "@typescript-eslint/no-unused-vars": "warn",
 // },
+
+// eslint.config.js

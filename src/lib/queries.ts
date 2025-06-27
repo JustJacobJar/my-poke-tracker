@@ -60,7 +60,7 @@ export function useTeamsQuery() {
     status,
   } = useInfiniteQuery({
     queryKey: ["teams"],
-    queryFn: fetchTeamPage,
+    queryFn: ({ pageParam }) => fetchTeamPage({ pageParam }),
     initialPageParam: 1,
     // maxPages: 1,
     getNextPageParam: (lastPage) => {
