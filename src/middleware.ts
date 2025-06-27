@@ -6,7 +6,7 @@ export default auth(async (request: NextRequest) => {
   //If not logged in, redirect
   if (!session) {
     //change this to the login page
-    const absoluteURL = new URL("/dashboard", request.nextUrl.origin);
+    const absoluteURL = new URL("/signin", request.nextUrl.origin);
     return NextResponse.redirect(absoluteURL.toString());
   }
 

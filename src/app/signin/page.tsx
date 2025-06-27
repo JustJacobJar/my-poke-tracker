@@ -1,5 +1,7 @@
+import Logo from "@/components/Logo";
 import { providerMap } from "@/lib/auth.config";
 import { SignInToProvider } from "@/server/signInActions";
+import Link from "next/link";
 import { Suspense } from "react";
 
 export default async function SignInPage(props: {
@@ -8,32 +10,20 @@ export default async function SignInPage(props: {
   const callbackUrl = await props.searchParams;
 
   return (
-    <div className="flex h-dvh w-full flex-col place-items-center pt-16">
-      <div className="flex flex-col place-items-center gap-16 text-center">
-        <h1 className="text-4xl font-bold">Poke Team Creator</h1>
+    <div className="grid min-h-screen w-full grid-rows-[20px_.5fr_1fr_20px] flex-col place-items-center pt-16 pb-20">
+      <div className="row-start-2 flex flex-col place-items-center gap-16 text-center">
+        <h1 className="place-self-center text-center text-5xl font-black">
+          My <span className="text-primary">Poke Team</span> Creator
+        </h1>
         {/* Logo */}
         <div className="stroke-foreground size-64">
-          <svg
-            className="size-full"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path>
-            <path d="m3.3 7 8.7 5 8.7-5"></path>
-            <path d="M12 22V12"></path>
-          </svg>
+          <Logo />
         </div>
       </div>
       {/* Buttons */}
-      <Suspense fallback={<p>Loading...</p>}>
-        <div className="my-16 flex flex-col place-items-center gap-4">
-          <h4 className="text-lg">Sign in using</h4>
+      <div className="row-start-3 my-16 flex flex-col place-items-center gap-6 self-start">
+        <h4 className="text-lg">Sign in using</h4>
+        <Suspense fallback={<p>Loading...</p>}>
           {Object.values(providerMap).map((provider) => (
             <form
               className="w-fit"
@@ -46,8 +36,40 @@ export default async function SignInPage(props: {
               <SigninButton provider={provider} />
             </form>
           ))}
-        </div>
-      </Suspense>
+        </Suspense>
+        <Link
+          className="bg-card text-card-foreground min-w-full rounded-md border-2 p-2 px-4 text-center text-xl font-bold transition-all duration-150 hover:inset-ring-1 hover:brightness-75 disabled:brightness-50"
+          href={"/dashboard"}
+        >
+          Go Back
+        </Link>
+      </div>
+      <div className="flex flex-row justify-center gap-8"></div>
+      <footer className="row-start-4 flex flex-col flex-wrap items-center justify-center gap-4">
+        <a
+          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
+          href="https://github.com/JustJacobJar"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg
+            className="fill-foreground"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            shapeRendering="geometricPrecision"
+            textRendering="geometricPrecision"
+            imageRendering="optimizeQuality"
+            fillRule="evenodd"
+            clipRule="evenodd"
+            viewBox="0 0 640 640"
+          >
+            <path d="M319.988 7.973C143.293 7.973 0 151.242 0 327.96c0 141.392 91.678 261.298 218.826 303.63 16.004 2.964 21.886-6.957 21.886-15.414 0-7.63-.319-32.835-.449-59.552-89.032 19.359-107.8-37.772-107.8-37.772-14.552-36.993-35.529-46.831-35.529-46.831-29.032-19.879 2.209-19.442 2.209-19.442 32.126 2.245 49.04 32.954 49.04 32.954 28.56 48.922 74.883 34.76 93.131 26.598 2.882-20.681 11.15-34.807 20.315-42.803-71.08-8.067-145.797-35.516-145.797-158.14 0-34.926 12.52-63.485 32.965-85.88-3.33-8.078-14.291-40.606 3.083-84.674 0 0 26.87-8.61 88.029 32.8 25.512-7.075 52.878-10.642 80.056-10.76 27.2.118 54.614 3.673 80.162 10.76 61.076-41.386 87.922-32.8 87.922-32.8 17.398 44.08 6.485 76.631 3.154 84.675 20.516 22.394 32.93 50.953 32.93 85.879 0 122.907-74.883 149.93-146.117 157.856 11.481 9.921 21.733 29.398 21.733 59.233 0 42.792-.366 77.28-.366 87.804 0 8.516 5.764 18.473 21.992 15.354 127.076-42.354 218.637-162.274 218.637-303.582 0-176.695-143.269-319.988-320-319.988l-.023.107z" />
+          </svg>
+          Jacob A-R
+        </a>
+        <p>© 2025 - All Rights Reserved</p>
+      </footer>
     </div>
   );
 }
@@ -167,7 +189,7 @@ function SigninButton({
 
   return (
     <button
-      className="bg-card text-card-foreground flex w-full flex-row place-items-center gap-4 border-2"
+      className="bg-card text-card-foreground flex min-w-fit flex-row place-items-center gap-4 border-2"
       type="submit"
     >
       <div className="aspect-square w-12">{icon()}</div>
