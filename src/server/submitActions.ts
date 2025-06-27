@@ -1,7 +1,7 @@
 "use server";
 import { z } from "zod/v4";
 import { auth } from "@/lib/auth";
-import { prisma } from "@/prisma";
+import { prisma } from "@/app/prisma";
 import { IPokeTeam } from "@/lib/types";
 
 export async function CreateTeam(teamData: IPokeTeam) {

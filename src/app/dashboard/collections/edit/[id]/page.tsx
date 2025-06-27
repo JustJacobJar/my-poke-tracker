@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "@/prisma";
+import { prisma } from "@/app/prisma";
 import { auth } from "@/lib/auth";
 import EditTeamFormPage from "./EditTeamForm";
 
