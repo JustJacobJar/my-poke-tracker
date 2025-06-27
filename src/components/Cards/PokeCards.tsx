@@ -5,9 +5,14 @@ import { textSkeleton } from "../Skeleton";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { usePokeQuery } from "@/lib/queries";
+import { PokeCardError } from "./PokeCardsSkeleton";
 
 export function PokeCard({ name }: { name: string }) {
   const [data] = usePokeQuery(name);
+
+  if (!data) {
+    return <PokeCardError />;
+  }
 
   return (
     <div className="bg-card inset-ring-border flex aspect-[9/13] min-w-44 grow flex-col place-content-around place-items-center gap-2 rounded-xl p-4 shadow-sm inset-ring-4">

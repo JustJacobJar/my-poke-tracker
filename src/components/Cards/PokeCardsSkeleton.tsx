@@ -21,3 +21,11 @@ export function PokeCardEmpty() {
     <div className="flex aspect-[9/13] h-full min-w-44 grow flex-col place-content-around place-items-center rounded-xl border-4 border-dashed"></div>
   );
 }
+
+export function PokeCardError() {
+  return (
+    <div className="flex aspect-[9/13] h-full min-w-44 grow flex-col place-content-around place-items-center rounded-xl border-4 border-dashed">
+      404 Not Found
+    </div>
+  );
+}

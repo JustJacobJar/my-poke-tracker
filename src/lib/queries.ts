@@ -25,8 +25,15 @@ export function usePokeQuery(name: string) {
       const path = name.toLowerCase();
       const url = baseApiUrl + path;
 
-      const res: IPokeCardInfo = await (await fetch(url)).json();
-      return res;
+      const res = await fetch(url);
+      if (!res.ok) {
+        return null
+        return "";
+      }
+
+      const data: IPokeCardInfo = await res.json();
+
+      return data;
     },
   });
 
