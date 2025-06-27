@@ -3,7 +3,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import pokeFile from "../app/data/PokemonList.json";
+import pokeFile from "../data/PokemonList.json";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
