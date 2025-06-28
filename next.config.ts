@@ -20,6 +20,8 @@ const nextConfig: NextConfig = {
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/**",
       ),
     ],
+    formats: ['image/webp'],
+    minimumCacheTTL:2678400
   },
 };
 
