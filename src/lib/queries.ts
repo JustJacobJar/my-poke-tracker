@@ -28,7 +28,6 @@ export function usePokeQuery(name: string) {
       const res = await fetch(url);
       if (!res.ok) {
         return null
-        return "";
       }
 
       const data: IPokeCardInfo = await res.json();

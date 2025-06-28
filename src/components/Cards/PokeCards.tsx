@@ -21,6 +21,7 @@ export function PokeCard({ name }: { name: string }) {
         <Image
           height={96}
           width={96}
+          unoptimized
           alt="Pokemon Sprite"
           src={data.sprites.front_default}
           className="aspect-square w-full rounded-lg"
