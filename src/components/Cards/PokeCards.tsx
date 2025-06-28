@@ -19,8 +19,9 @@ export function PokeCard({ name }: { name: string }) {
       <label>{name.charAt(0).toUpperCase() + name.slice(1)}</label>
       <Suspense fallback={<ImageLoading />}>
         <Image
+          height={96}
+          width={96}
           unoptimized
-          fill={true}
           alt="Pokemon Sprite"
           src={data.sprites.front_default}
           className="aspect-square w-full rounded-lg"
