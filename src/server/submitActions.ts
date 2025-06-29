@@ -101,6 +101,54 @@ export async function DeleteTeam(teamId: string, redir: boolean) {
   }
 }
 
+export async function ChangeDisplayName(userId: string, name: string) {
+  //Auth user
+  const session = await auth();
+  if (!session?.user?.id) throw "401: Unauthorised, please sign in";
+
+  //Find the user
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) throw "404 User not found";
+
+  //Update name
+  try {
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        name: name,
+      },
+    });
+    return user;
+  } catch (error) {
+    console.log("Db error: " + error);
+    throw "There was an error with the database, try again later.";
+  }
+}
+
+export async function DeleteUser(userId: string) {
+  //Auth user
+  const session = await auth();
+  if (!session?.user?.id) throw "401: Unauthorised, please sign in";
+
+  //Find the user
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) throw "404 User not found";
+
+  //Make sure the user is deleting their own account
+  if (session.user.id !== userId)
+    throw "401 Unauthorised, you can only delete your own account";
+
+  try {
+    await prisma.user.delete({
+      where: { id: userId },
+    });
+    return;
+  } catch (error) {
+    console.log("DB error:" + error);
+    throw "There was an error with the database, try again later";
+  }
+}
+
 const IPokeTeamZ = z.object({
   name: z.string(),
   pokemon: z.array(z.string().catch("")),

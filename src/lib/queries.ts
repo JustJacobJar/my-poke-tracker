@@ -13,8 +13,15 @@ import {
   fetchTeamPage,
   fetchTeamPageByAuthor,
 } from "@/server/fetchActions";
-import { CreateTeam, DeleteTeam, EditTeam } from "@/server/submitActions";
+import {
+  ChangeDisplayName,
+  CreateTeam,
+  DeleteTeam,
+  DeleteUser,
+  EditTeam,
+} from "@/server/submitActions";
 import { useRouter } from "next/navigation";
+import { signOut } from "./auth";
 
 export function usePokeQuery(name: string) {
   const baseApiUrl = "https://pokeapi.co/api/v2/pokemon-form/";
@@ -27,7 +34,7 @@ export function usePokeQuery(name: string) {
 
       const res = await fetch(url);
       if (!res.ok) {
-        return null
+        return null;
       }
 
       const data: IPokeCardInfo = await res.json();
@@ -171,6 +178,24 @@ export function useDeleteTeamMutate() {
       if (data.redir) {
         router.push(`/dashboard/collections/`);
       }
+    },
+  });
+  return [mutation] as const;
+}
+
+export function useEditDisplayNameMutate() {
+  const mutation = useMutation({
+    mutationFn: async ({ userId, name }: { userId: string; name: string }) => {
+      return await ChangeDisplayName(userId, name);
+    },
+  });
+  return [mutation] as const;
+}
+
+export function useDeleteUserMutate() {
+  const mutation = useMutation({
+    mutationFn: async ({ userId }: { userId: string }) => {
+      return await DeleteUser(userId);
     },
   });
   return [mutation] as const;

@@ -32,9 +32,12 @@ export default {
   providers: providers,
   callbacks: {
     // Callback to manage the JWT token
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user, trigger, session }) => {
       if (user) {
         token.id = user.id;
+      }
+      if (trigger === "update" && session.name) {
+        token.name = session.name;
       }
       return token;
     },
