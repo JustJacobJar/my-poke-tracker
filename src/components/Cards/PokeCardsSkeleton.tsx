@@ -22,9 +22,10 @@ export function PokeCardEmpty() {
   );
 }
 
-export function PokeCardError() {
+export function PokeCardError({ name }: { name: string }) {
   return (
     <div className="flex aspect-[9/13] h-full min-w-44 grow flex-col place-content-around place-items-center rounded-xl border-4 border-dashed">
+      <div className="line-clamp-1">{name}</div>
       404 Not Found
     </div>
   );

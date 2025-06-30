@@ -62,7 +62,9 @@ export default function Home() {
           </svg>
           Jacob A-R
         </a>
-        <p>© 2025 - All Rights Reserved</p>
+        <p className="text-muted-foreground text-xs">
+          Pokémon and Pokémon character names are trademarks of Nintendo.
+        </p>
       </footer>
     </div>
   );

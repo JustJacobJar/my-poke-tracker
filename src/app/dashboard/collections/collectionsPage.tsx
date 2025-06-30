@@ -32,7 +32,7 @@ export default function CollectionPage({ authorId }: { authorId: string }) {
             <Fragment key={index}>
               {group.data.map((team, i) => (
                 <div
-                  className="bg-card flex h-full w-full flex-col rounded-2xl border-2 px-2"
+                  className="bg-card flex h-full grow flex-col rounded-2xl border-2 px-2"
                   key={i}
                 >
                   <PokeTeamStandard pokeTeam={team} />
@@ -52,7 +52,7 @@ export default function CollectionPage({ authorId }: { authorId: string }) {
       There was an error: {error?.message}. Please try again later
     </p>
   ) : (
-    <div className="flex w-full flex-col place-items-center place-self-center">
+    <div className="flex w-full grow flex-col place-items-center place-self-center">
       <h1 className="py-8 text-4xl font-bold">Your Teams</h1>
       {teams()}
     </div>

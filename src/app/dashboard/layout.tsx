@@ -1,4 +1,10 @@
 import NavBar from "@/components/NavBar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "The latest poke teams",
+};
 
 export default function DashboardLayout({
   children,

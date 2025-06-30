@@ -3,7 +3,6 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Menu, MenuItem } from "./Menu";
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function ProfileNav() {

@@ -14,6 +14,11 @@ when input is submitted, set search as complete -> hides restults
 Upon input change show results
  */
 
+export interface IPokeData {
+  name: string;
+  id: string;
+}
+
 export default function Autocomplete({
   // pokeList,
   classname,
@@ -29,10 +34,10 @@ export default function Autocomplete({
   slotName: string;
   editValue?: string;
 }) {
-  const pokeList: string[] = pokeFile;
+  const pokeList: IPokeData[] = pokeFile.pokemon;
   const [searchTerm, setSearchTerm] = useState(editValue ? editValue : "");
   const [activeIndex, setActiveIndex] = useState(-1);
-  const { pokemon } = UsePokemon(pokeList as string[], searchTerm); //Filtered list of pokemon
+  const { pokemon } = UsePokemon(pokeList, searchTerm); //Filtered list of pokemon
   const [selected, setSelected] = useState(editValue ? true : false);
 
   //Reset search when page sends new data
@@ -49,7 +54,10 @@ export default function Autocomplete({
   };
 
   const handleBlur = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!pokeList.includes(event.currentTarget.value)) {
+    const filteredArr = (name: string) =>
+      pokeList.filter((element) => element.name == name);
+
+    if (!filteredArr(event.currentTarget.value)) {
       setSearchTerm("");
       return;
     }
@@ -94,8 +102,8 @@ export default function Autocomplete({
       event.preventDefault();
       try {
         if (pokemon[activeIndex] != undefined) {
-          setSearchTerm(pokemon[activeIndex]);
-          handleSearchSubmit(pokemon[activeIndex]);
+          setSearchTerm(pokemon[activeIndex].name);
+          handleSearchSubmit(pokemon[activeIndex].name);
         }
       } catch {
         console.log("Guess doesnt exist");
@@ -139,7 +147,7 @@ export default function Autocomplete({
 }
 
 export interface ResultListProps {
-  results: string[];
+  results: IPokeData[];
   searchTerm: string;
   handleSelect: (pokeName: string) => void;
   handleMouseOver: (index: number) => void;
@@ -191,7 +199,7 @@ function ResultList({
           <li
             ref={activeIndex === index ? myRef : null}
             key={index}
-            onMouseDown={() => handleSelect(result)}
+            onMouseDown={() => handleSelect(result.name)}
             onMouseOver={() => handleMouseOver(index)}
             className={cn(
               "flex h-fit w-full flex-row place-content-start gap-2 text-center hover:bg-white/20",
@@ -206,7 +214,7 @@ function ResultList({
             </div> */}
             {/* Name Area */}
             <div className="w-full place-self-center text-2xl">
-              {matchedTerm(result, searchTerm)}{" "}
+              {matchedTerm(result.name, searchTerm)}{" "}
             </div>
           </li>
         ))}
@@ -216,15 +224,15 @@ function ResultList({
 }
 
 //Filters the list for the given search term
-function UsePokemon(pokeList: string[], searchTerm?: string) {
-  const [pokemon, setpokemon] = useState<string[]>([]);
+function UsePokemon(pokeList: IPokeData[], searchTerm?: string) {
+  const [pokemon, setpokemon] = useState<IPokeData[]>([]);
 
   useEffect(() => {
     if (!searchTerm) {
       return setpokemon([]);
     }
     const filtedList = pokeList.filter((value) => {
-      return value.toLowerCase().includes(searchTerm.toLowerCase());
+      return value.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
     return setpokemon(filtedList);
   }, [pokeList, searchTerm]);

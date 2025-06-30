@@ -4,7 +4,6 @@ import Modal from "@/components/Modal";
 import { useDeleteUserMutate, useEditDisplayNameMutate } from "@/lib/queries";
 import { cn } from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function ProfileForm() {

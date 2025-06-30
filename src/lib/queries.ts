@@ -21,7 +21,10 @@ import {
   EditTeam,
 } from "@/server/submitActions";
 import { useRouter } from "next/navigation";
-import { signOut } from "./auth";
+
+import pokeFile from "../data/PokemonList.json";
+import { IPokeData } from "@/components/Autocomplete";
+const pokeList: IPokeData[] = pokeFile.pokemon;
 
 export function usePokeQuery(name: string) {
   const baseApiUrl = "https://pokeapi.co/api/v2/pokemon-form/";
@@ -29,7 +32,13 @@ export function usePokeQuery(name: string) {
     queryKey: ["pokeCard", name],
     staleTime: "static",
     queryFn: async () => {
-      const path = name.toLowerCase();
+      //Get id of name
+      const foundElement = (name: string) =>
+        pokeList.find((element) => element.name == name)?.id;
+
+      const id = foundElement(name.toLowerCase());
+
+      const path = id ? id : name.toLowerCase();
       const url = baseApiUrl + path;
 
       const res = await fetch(url);
