@@ -46,7 +46,7 @@ export function MenuItem({
 }) {
   return (
     <button
-      className="hover:bg-foreground/10 flex h-10 w-full flex-row place-items-center gap-2 px-2 transition-all duration-150"
+      className="hover:bg-foreground/10 flex h-12 w-full flex-row place-items-center gap-2 px-2 transition-all duration-150"
       onClick={fn}
     >
       {icon}

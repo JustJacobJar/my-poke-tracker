@@ -65,18 +65,18 @@ export default function PokeTeamStandard({
   };
 
   return (
-    <div className="flex w-full flex-col gap-4 pt-2">
+    <div className="flex h-full grow flex-col gap-4 pt-2">
       <Suspense fallback={<PokeTeamSkeleton />}>
         <div className="flex flex-row place-content-between px-4">
           <div className="flex flex-col">
-            <a
+            <Link
               className={redirect ? "pointer-events-none" : ""}
               href={`/dashboard/team/${pokeTeam.id}`}
             >
               <h1 className="text-lg hover:underline">
                 {pokeTeam.name ? pokeTeam.name : "No team name"}
               </h1>
-            </a>
+            </Link>
             <h2>Created by: {author ? author : "Not Found"}</h2>
           </div>
           <div className="flex flex-row gap-4">

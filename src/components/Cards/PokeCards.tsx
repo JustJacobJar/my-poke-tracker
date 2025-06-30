@@ -11,12 +11,14 @@ export function PokeCard({ name }: { name: string }) {
   const [data] = usePokeQuery(name);
 
   if (!data) {
-    return <PokeCardError />;
+    return <PokeCardError name={name} />;
   }
 
   return (
     <div className="bg-card inset-ring-border flex aspect-[9/13] min-w-44 grow flex-col place-content-around place-items-center gap-2 rounded-xl p-4 shadow-sm inset-ring-4">
-      <label>{name.charAt(0).toUpperCase() + name.slice(1)}</label>
+      <label className="line-clamp-1">
+        {name.charAt(0).toUpperCase() + name.slice(1)}
+      </label>
       <Suspense fallback={<ImageLoading />}>
         <Image
           height={96}

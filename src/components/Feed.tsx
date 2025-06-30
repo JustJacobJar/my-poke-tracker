@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Feed({
@@ -33,7 +32,7 @@ export default function Feed({
           <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
         </svg>
       }
-      endMessage={<h4 className="my-8 text-lg">No more data.</h4>}
+      endMessage={<h4 className="my-8 text-lg">No more teams.</h4>}
     >
       <li className="grid max-w-[96rem] grid-cols-1 gap-4 place-self-center p-4 lg:grid-cols-2 2xl:grid-cols-3">
         {children}
